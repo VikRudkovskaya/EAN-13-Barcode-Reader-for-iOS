@@ -12,108 +12,96 @@
 
 #import "BarcodeParserImpl.h"
 
-
-
 @implementation BarcodeParserImpl
-
-
 
 -(NSString*)barcodeFromImage:(UIImage *)image{
     NSUInteger width = image.size.width;
     NSUInteger height = image.size.height;
     int h = round(height / 2 + 5);
     
-    short **arrayFromImage = [self blackAndWhiteArrayCFromImage:image];// делаем массив 1-0 из фото
-    short *vectorScanLine;
-    vectorScanLine = arrayFromImage[h];// выделяем из массива сканирующую линию
-    
-//    for (int i = 0; i < width; i++) {
-//        printf("%d", vectorScanLine[i]);
-//    }
-//    printf("\n");
-    // считаем индекс до значащей части штрихкода - первых двух вертикальных полос (предпоагаю, что с левого и правого края белый фон, т.е. нули)
-    int startIndexForBarcode = [self calculateStartIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width];
-    int endIndexForBarcode = [self calculateEndIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width]; // последних двух вертикальных полос
-    float averageCountOfPixelsInSimpleDash = [self calculateAverageCountOfPixelsInSimpleDashWithStartIndex:startIndexForBarcode WithEndIndex:endIndexForBarcode]; // вычисляем мат ожидание длины элементарного штриха
-//    printf("%f", averageCountOfPixelsInSimpleDash);
-//    printf("\n");
-    
     NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
     
-    short vectorOfBarcodeNumbers[13]; // в даннный массив будут записываться распознанные цифры
-    vectorOfBarcodeNumbers[0] = 0; // считаем, что локация 0, пока ничего не известно о первой цифре (она "распознается" (вычисляется) только по положению трех из шести цифр в левой части штрихкода)
+// Шаг 1. Подготовка
+    // Шаг 1.0 Делаем массив 1-0 из фото
+    short **arrayFromImage = [self blackAndWhiteArrayCFromImage:image];
+    // Шаг 1.1 Выделяем из массива сканирующую линию
+    short *vectorScanLine;
+    vectorScanLine = arrayFromImage[h];
     
-    if (averageCountOfPixelsInSimpleDash <= 0) {// хиленькая проверка адекватности полученной сканирующей линии; проверям, прошла ли сканирующая линия непосредственно по баркоду
+    // Шаг 1.2 Считаем индексы до значащей части штрихкода - первых и последних двух вертикальных полос
+    // (предпоагаю, что с левого и правого края белый фон, т.е. нули)
+    int startIndexForBarcode = [self calculateStartIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width];
+    int endIndexForBarcode = [self calculateEndIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width];
+    // Шаг 1.3 Вычисляем мат ожидание длины элементарного штриха
+    float averageCountOfPixelsInSimpleDash = [self calculateAverageCountOfPixelsInSimpleDashWithStartIndex:startIndexForBarcode
+                                                                                              WithEndIndex:endIndexForBarcode];
+
+    // Шаг 1.4 В даннный массив (vectorOfBarcodeNumbers) будут записываться распознанные цифры
+    short vectorOfBarcodeNumbers[13];
+    // Пока ничего не известно о первой цифре, считаем, что локация == 0
+    // Первая цифра "распознается" (вычисляется) только по положению трех из шести цифр в левой части штрихкода
+    vectorOfBarcodeNumbers[0] = 0;
+    
+    // Шаг 1.5 Проверка адекватности полученной сканирующей линии; проверям, прошла ли сканирующая линия непосредственно по баркоду
+    if (averageCountOfPixelsInSimpleDash <= 0) {
         for (short i = 0; i < 13; i++) {
             vectorOfBarcodeNumbers[i] = -3;// если не прошла, то выдаём -3
             [returnStringFromArray appendFormat:@"%d", vectorOfBarcodeNumbers[i]];
-//            printf("%d", vectorOfBarcodeNumbers[i]);
         }
-    return returnStringFromArray;//костыль
+    return returnStringFromArray;
     }
-//    printf("\n");
-    
-    startIndexForBarcode = [self calculateStartIndexToSignificantNumbersWithStartIndex:startIndexForBarcode WithVectorScanLine:vectorScanLine];
+
+    // Шаг 1.6 Пропускаем первые две вертикальные линии
+    startIndexForBarcode = [self calculateStartIndexToSignificantNumbersWithStartIndex:startIndexForBarcode
+                                                                    WithVectorScanLine:vectorScanLine];
+// Шаг 2 Распознавание
     int shift = 0;
+    // В массив bitArrayForSixLeftNumbers будем записывать сжатые в значащий битовый вид со второй по седьмую цифры (первые 6 левых без самой первой)
     short bitArrayForSixLeftNumbers[42];
+    
+    // Шаг 2.1 Распознаем первые 6 цифр (левые)
     for (int k = 0; k < 6; k++) {
         short *bitArrayForOneNumber;
-        bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash WithStartIndex:&startIndexForBarcode];
-//        for (int i = 0; i < 7; i++) {
-//            printf("%d", bitArrayForOneNumber[i]);
-//        }
-//        
-//        short testNum = [self decodeLeftNumberLWithBitArrayForOneNumber:bitArrayForOneNumber];
-//        printf("\n");
-//        printf("%d", testNum);
-//        printf("\n");
-//        printf("%d", startIndexForBarcode);
-//        printf("\n");
-        
+        bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
+                                                      WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
+                                                                     WithStartIndex:&startIndexForBarcode];
+
         for (int i = 0; i <  7; i++) {
             bitArrayForSixLeftNumbers[shift + i] = bitArrayForOneNumber[i];
         }
         shift = shift + 7;
+    
         vectorOfBarcodeNumbers[k+1] = [self decodeLeftNumberLWithBitArrayForOneNumber:bitArrayForOneNumber];
-        
     }
-    
-//    for (int i = 0; i < 7; i++) {
-//        printf("%d",vectorOfBarcodeNumbers[i]);
-//    }
-//    printf("\n");
-//    
-//    for (int i = 0; i < 42; i++) {
-//        printf("%d", bitArrayForSixLeftNumbers[i]);
-//    }
-    
+    // В случае, если самая первая цифра не 0, то нужно дораспознать оставшиеся нераскодированные 3 цифры
     short decodeTableForRegion[9][3] = {{3,5,6}, {3,4,6},{3,4,5},{2,5,6},{2,3,6},{2,3,4},{2,4,6},{2,4,5},{2,3,5}};
     for (short i = 0; i < 8; i++) {
         if (vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] == -1 && vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] == -1 && vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] == -1) {
             vectorOfBarcodeNumbers[0] = i+1;
-            vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][0]]];
-            vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]]];
-            vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][2]]];
+            vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers
+                                                                                                                               withIndex:decodeTableForRegion[i][0]]];
+            vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers
+                                                                                                                               withIndex:decodeTableForRegion[i][1]]];
+            vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:[self cutArrayFromArray:bitArrayForSixLeftNumbers
+                                                                                                                               withIndex:decodeTableForRegion[i][2]]];
         }
     }
-//    printf("\n");
-//    for (int i = 0; i < 7; i++) {
-//        printf("%d",vectorOfBarcodeNumbers[i]);
-//    }
-//    printf("\n");
+    // Прошли первые 6 (или 7, если считать с самой первой, вынесенной за штрихкод) цифр
+
+    // Шаг 2.2 Дошли до центральных длинных вертикальных линий - пропускаем их, это не значащая часть штрихкода
+    startIndexForBarcode = [self calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:startIndexForBarcode
+                                                                                WithVectorScanLine:vectorScanLine];
     
-    
-    startIndexForBarcode = [self calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:startIndexForBarcode WithVectorScanLine:vectorScanLine];
-//    printf("%d", startIndexForBarcode);
-//    printf("\n");
-    
+    // Шаг 2.3 Распознаем оставшиеся 6 цифр (правые)
     for (int k = 7; k < 13; k++) {
         short *bitArrayForOneNumber;
-        bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash WithStartIndex:&startIndexForBarcode];
+        bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
+                                                      WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
+                                                                     WithStartIndex:&startIndexForBarcode];
         vectorOfBarcodeNumbers[k] = [self decodeRightNumberWithBitArrayForOneNumber:bitArrayForOneNumber];
     }
     
-    //конвертируем полученный ответ в строку
+// Шаг 3. Конвертируем полученный ответ в строку
     for (int i = 0; i < 13; i++) {
         if (i == 1 || i == 7) {
             [returnStringFromArray appendFormat:@"    %d", vectorOfBarcodeNumbers[i]];
@@ -318,28 +306,6 @@ res;})\
     return averageCountOfPixelsInSimpleDash;
 }
 
--(void)calculateTechValuesWithEndIndex:(int)endIndexForBarcode WithStartIndex:(int) startIndexForBarcode WithWidth:(NSUInteger) width{ // технический рабочий момент
-    int fullLenghtForBarcode;
-    fullLenghtForBarcode = endIndexForBarcode - startIndexForBarcode + 1;
-    NSLog(@"fullLenghtForBarcode");
-    printf("%d", fullLenghtForBarcode);
-    printf("\n");
-    NSLog(@"полная ширина width");
-    printf("%d", (int)width);
-    printf("\n");
-    NSLog(@"startIndex");
-    printf("%d", startIndexForBarcode);
-    printf("\n");
-    NSLog(@"endIndex");
-    printf("%d", endIndexForBarcode);
-    printf("\n");
-    
-    float averageCountOfPixelsInSimpleDash = fullLenghtForBarcode / 95.f;
-    NSLog(@"среднее значение на элементраный штрих");
-    printf("%0.3f", averageCountOfPixelsInSimpleDash);
-    printf("\n");
-
-}
 
 -(int)calculateStartIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth: (NSUInteger)width{
     int startIndexForBarcode = 0;
