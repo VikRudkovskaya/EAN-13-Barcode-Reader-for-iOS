@@ -45,10 +45,10 @@
   
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
-    short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
+ //   short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
     h = round(height / 10); // Задаем новую высоту
     
-    if ((countOfUnrecognizedNumbersInBarcode > 0 || checkSum == false) && h < height) {//Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
+    while ((countOfUnrecognizedNumbersInBarcode > 0 || checkSum == false) && h < height) {//Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
         free(recognizedNumbers);
   
         BOOL flag = false;
@@ -76,6 +76,9 @@
                 
             }
         }
+        else {
+            h = h + 1;
+        }
     }
     
 // Шаг 3. Преобразование в строку
@@ -88,6 +91,7 @@
         }
     }
     
+// Шаг 4. Освобождение памяти
     for (int i = 0; i < height; i++) {
         free(arrayFromImage[i]);
     }
