@@ -6,7 +6,8 @@
 //  Copyright © 2015 Viktoria Rudkovskaya. All rights reserved.
 //
 // В данном классе происходит обработка UIImage, возвращается отформатированная строка с распознанными\нераспознанными цифрами (13 штук)
-// -3 ошибка парсера (сканирущая линия прошла ниже или выше штрихкода)
+// -4, -5, - некорректное отчернобеливание изображения или в сканирующую линию попал не баркод
+// -3  - сканирущая линия прошла ниже или выше штрихкода
 // -1 не прошел по L-шаблону, может быть ошибка парсера
 // -2 не совпало ни с одним шаблоном – ошибка парсера
 
@@ -29,6 +30,7 @@
     // Шаг 1.1 Выделяем из массива сканирующую линию
     short *vectorScanLine;
     vectorScanLine = arrayFromImage[h];
+
 // Шаг 2. Распознавание
     short bestRecognizedNumbers[13];
     // Шаг 2.1 Распознаем штрихкод на исходной высоте
@@ -37,25 +39,30 @@
         bestRecognizedNumbers[i] = recognizedNumbers[i];
     }
     for(int i = 0; i < 13; i++){
-        printf("%d", recognizedNumbers[i]);
+        printf("%d", bestRecognizedNumbers[i]);
     }
     printf("\n");
-    // Считаем контрольную сумму для полученных распознанных цифр. Если контрольная сумма корректна, но возвращаем true
+    // Считаем контрольную сумму для полученных распознанных цифр. Если контрольная сумма корректна, то возвращаем true
     BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
   
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
  //   short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
     h = round(height / 10); // Задаем новую высоту
-    
-    while ((countOfUnrecognizedNumbersInBarcode > 0 || checkSum == false) && h < height) {//Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
+    //Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
+    while ((countOfUnrecognizedNumbersInBarcode > 0 || checkSum == false) && h < height) {
         free(recognizedNumbers);
   
         BOOL flag = false;
         int i = 0;
+        int k = 0;
+        // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в строке меньше 29), то нет смысла её проверять вообще
         while (i < width && flag == false) {
-            if (vectorScanLine[i] > 0) {// Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей, то нет смысла её проверять вообще
-                flag = true;
+            if (vectorScanLine[i] > 0) {
+                k++;
+                if(k > 29){
+                    flag = true;
+                }
             }
             i++;
         }
@@ -121,7 +128,7 @@
 -(short) calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:(short *)recognizedNumbers{
     short countOfUnrecognizedNumbersInBarcode = 0;
     for (int i = 1; i < 13; i++) {
-        if (recognizedNumbers[i] == -2 || recognizedNumbers[i] == -1 || recognizedNumbers[i] == -3) {
+        if (recognizedNumbers[i] < 0) {
             countOfUnrecognizedNumbersInBarcode++;
         }
     }
@@ -148,9 +155,7 @@
     if (averageCountOfPixelsInSimpleDash <= 0) {
         for (short i = 0; i < 13; i++) {
             vectorOfBarcodeNumbers[i] = -3;// если не прошла, то выдаём -3
-            //[returnStringFromArray appendFormat:@"%d", vectorOfBarcodeNumbers[i]];
         }
-        //return returnStringFromArray;
         return vectorOfBarcodeNumbers;
     }
     
@@ -165,17 +170,25 @@
     
     // Шаг 2.1 Распознаем первые 6 цифр (левые)
     for (int k = 0; k < 6; k++) {
-        if (startIndexForBarcode >= width) {
+        if (startIndexForBarcode >= endIndexForBarcode) {
             for (short i = 0; i < 13; i++) {
-                vectorOfBarcodeNumbers[i] = -3;// если не прошла, то выдаём -3
+                vectorOfBarcodeNumbers[i] = -4;
             }
             return vectorOfBarcodeNumbers;
         }
 
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
                                                       WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
-                                                                     WithStartIndex:&startIndexForBarcode];
+                                                                     WithStartIndex:&startIndexForBarcode
+                                                                                 WithWidth:(int)width];
         
+        if (startIndexForBarcode >= endIndexForBarcode) {
+            for (short i = 0; i < 13; i++) {
+                vectorOfBarcodeNumbers[i] = -5;
+            }
+            return vectorOfBarcodeNumbers;
+        }
+
         for (int i = 0; i <  7; i++) {
             bitArrayForSixLeftNumbers[shift + i] = bitArrayForOneNumber[i];
         }
@@ -213,28 +226,38 @@
     for (int k = 7; k < 13; k++) {
         if (startIndexForBarcode >= width) {
             for (short i = 0; i < 13; i++) {
-                vectorOfBarcodeNumbers[i] = -3;
+                vectorOfBarcodeNumbers[i] = -4;
             }
             return vectorOfBarcodeNumbers;
         }
         
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
                                                       WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
-                                                                     WithStartIndex:&startIndexForBarcode];
+                                                                     WithStartIndex:&startIndexForBarcode
+                                                                                 WithWidth:(int) width];
+        if (startIndexForBarcode >= width) {
+            for (short i = 0; i < 13; i++) {
+                vectorOfBarcodeNumbers[i] = -5;
+            }
+            return vectorOfBarcodeNumbers;
+        }
+
         vectorOfBarcodeNumbers[k] = [self decodeRightNumberWithBitArrayForOneNumber:bitArrayForOneNumber];
         free(bitArrayForOneNumber);
     }
     return vectorOfBarcodeNumbers;
 }
 
--(short *) bitCompressionOfDashInVectorWithVectorScanLine:(short *) vectorScanLine WithAveragePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash WithStartIndex:(int *)startIndexForBarcodeOut{
+-(short *) bitCompressionOfDashInVectorWithVectorScanLine:(short *) vectorScanLine
+                            WithAveragePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
+                                           WithStartIndex:(int *)startIndexForBarcodeOut
+                                                WithWidth:(int)width{
     // В идеальном случае число пикселей в каждой элементарной вертикальной черте можно точно вычислить (пиксельная длина
     // баркода будет кратна 95, соответсвенно на каждую элементарную черту придется одинаковое число пикселей).
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
     // Этот метод учитывает, что изображения "неидеальны", и делает компрессию куска сканирующей линии с учетом этого факта.
 
     short *numberBitsVecTemp = calloc(7, sizeof(short));
-   
     for (int i = 0; i < 7; i++) {
         numberBitsVecTemp[i] = 2;
     }
@@ -243,7 +266,7 @@
     short zeroOrOneLabel = 0;
     int shift = 0;
     int startIndexForBarcode = *startIndexForBarcodeOut;
-    while (totalLengthOfDashesInNumber < 7) {
+    while (totalLengthOfDashesInNumber < 7 && startIndexForBarcode <= width) {
         int sameElementsStretchLength = 0;
         while (vectorScanLine[startIndexForBarcode] == zeroOrOneLabel) {
             bitLengthOfSameDashes = bitLengthOfSameDashes + 1;
