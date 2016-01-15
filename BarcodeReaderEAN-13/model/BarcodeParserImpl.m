@@ -7,9 +7,9 @@
 //
 // В данном классе происходит обработка UIImage, возвращается отформатированная строка с распознанными\нераспознанными цифрами (13 штук)
 // -4, -5, - некорректное отчернобеливание изображения или в сканирующую линию попал не баркод
-// -3  - сканирущая линия прошла ниже или выше штрихкода
-// -1 не прошел по L-шаблону, может быть ошибка парсера
-// -2 не совпало ни с одним шаблоном – ошибка парсера
+// -3 - сканирущая линия прошла ниже или выше штрихкода
+// -1 - не прошел по L-шаблону, может быть ошибка парсера
+// -2 - не совпало ни с одним шаблоном – ошибка парсера
 
 #import "BarcodeParserImpl.h"
 
@@ -57,9 +57,11 @@ static NSInteger _allocCount = 0;
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
     short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
-    h = round(height / 10); // Задаем новую высоту
-    //Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
+    h = 1; // Задаем новую высоту
+    // Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
+    // До тех пор пока
     while (countOfUnrecognizedNumbersInBarcode > 0  && h < height) {
+        vectorScanLine = arrayFromImage[h];
         int i = 0;
         int k = 0;
         // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в строке меньше 29), то нет смысла её проверять вообще
@@ -76,7 +78,6 @@ static NSInteger _allocCount = 0;
         
         printf("%d", h);
         printf("\n");
-        vectorScanLine = arrayFromImage[h];
         _free(recognizedNumbers);
         recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
         //checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
@@ -84,6 +85,7 @@ static NSInteger _allocCount = 0;
         if (countOfUnrecognizedNumbersInBarcode < countOfUnrecognizedNumbersForBestRecognizedBarcode) {
             for (short i = 0; i < 13; i++) {
                 bestRecognizedNumbers[i] = recognizedNumbers[i];
+                countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
             }
         }
         for(int i = 0; i < 13; i++){
@@ -99,7 +101,7 @@ static NSInteger _allocCount = 0;
             [returnStringFromArray appendFormat:@"    %d", bestRecognizedNumbers[i]];
         }
         else{
-           [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
+            [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
         }
     }
     
@@ -282,7 +284,9 @@ static NSInteger _allocCount = 0;
         }
         sameElementsStretchLength = round(bitLengthOfSameDashes / averageCountOfPixelsInSimpleDash);
         totalLengthOfDashesInNumber = totalLengthOfDashesInNumber + sameElementsStretchLength;
-        
+        if (totalLengthOfDashesInNumber > 7) {
+            continue;
+        }
         for (int i = shift; i < totalLengthOfDashesInNumber; i++) {
             numberBitsVecTemp[i] = zeroOrOneLabel;
         }
