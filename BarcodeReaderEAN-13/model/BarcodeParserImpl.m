@@ -13,7 +13,17 @@
 
 #import "BarcodeParserImpl.h"
 
+
 @implementation BarcodeParserImpl
+
+void callocCheck() {
+//    NSLog(@"ttt");
+}
+
+static NSInteger _allocCount = 0;
+
+#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
+#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
 
 -(NSString*)barcodeFromImage:(UIImage *)image{
 // Шаг 1. Подготовка
@@ -43,58 +53,53 @@
     }
     printf("\n");
     // Считаем контрольную сумму для полученных распознанных цифр. Если контрольная сумма корректна, то возвращаем true
-    BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
-  
+    //BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
- //   short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
+    short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
     h = round(height / 10); // Задаем новую высоту
     //Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
-    while ((countOfUnrecognizedNumbersInBarcode > 0 || checkSum == false) && h < height) {
-        free(recognizedNumbers);
-  
-        BOOL flag = false;
+    while (countOfUnrecognizedNumbersInBarcode > 0  && h < height) {
         int i = 0;
         int k = 0;
         // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в строке меньше 29), то нет смысла её проверять вообще
-        while (i < width && flag == false) {
+        while (i < width) {
             if (vectorScanLine[i] > 0) {
                 k++;
-                if(k > 29){
-                    flag = true;
-                }
             }
             i++;
         }
+        if (k < 29) {
+            h++;
+            continue;
+        }
         
-        if (flag) {
-            while (countOfUnrecognizedNumbersInBarcode > 0 && h < height) {
-                printf("%d", h);
-                printf("\n");
-                vectorScanLine = arrayFromImage[h];
-                recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
-                for(int i = 0; i < 13; i++){
-                    printf("%d", recognizedNumbers[i]);
-                }
-                printf("\n");
-                h = h + 50;
-                countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
-
-                
+        printf("%d", h);
+        printf("\n");
+        vectorScanLine = arrayFromImage[h];
+        _free(recognizedNumbers);
+        recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
+        //checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
+        countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
+        if (countOfUnrecognizedNumbersInBarcode < countOfUnrecognizedNumbersForBestRecognizedBarcode) {
+            for (short i = 0; i < 13; i++) {
+                bestRecognizedNumbers[i] = recognizedNumbers[i];
             }
         }
-        else {
-            h = h + 1;
+        for(int i = 0; i < 13; i++){
+            printf("%d", recognizedNumbers[i]);
         }
+        printf("\n");
+        h = h + 10;
     }
     
 // Шаг 3. Преобразование в строку
     for (int i = 0; i < 13; i++) {
         if (i == 1 || i == 7) {
-            [returnStringFromArray appendFormat:@"    %d", recognizedNumbers[i]];
+            [returnStringFromArray appendFormat:@"    %d", bestRecognizedNumbers[i]];
         }
         else{
-           [returnStringFromArray appendFormat:@" %d", recognizedNumbers[i]];
+           [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
         }
     }
     
@@ -102,8 +107,9 @@
     for (int i = 0; i < height; i++) {
         free(arrayFromImage[i]);
     }
-    free(arrayFromImage);
-    free(recognizedNumbers);
+    _free(arrayFromImage);
+    _free(recognizedNumbers);
+    NSLog(@"TEST %@", @(_allocCount));
     return returnStringFromArray;
 }
 
@@ -146,7 +152,7 @@
                                                                                               WithEndIndex:endIndexForBarcode];
     
     // Шаг 1.3 В даннный массив (vectorOfBarcodeNumbers) будут записываться распознанные цифры
-    short *vectorOfBarcodeNumbers = calloc(13, sizeof(short));
+    short *vectorOfBarcodeNumbers = _calloc(13, sizeof(short));
     // Пока ничего не известно о первой цифре, считаем, что локация == 0
     // Первая цифра "распознается" (вычисляется) только по положению трех из шести цифр в левой части штрихкода
     vectorOfBarcodeNumbers[0] = 0;
@@ -186,6 +192,7 @@
             for (short i = 0; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
             }
+            _free(bitArrayForOneNumber);
             return vectorOfBarcodeNumbers;
         }
 
@@ -195,7 +202,7 @@
         shift = shift + 7;
         
         vectorOfBarcodeNumbers[k+1] = [self decodeLeftNumberLWithBitArrayForOneNumber:bitArrayForOneNumber];
-        free(bitArrayForOneNumber);
+        _free(bitArrayForOneNumber);
     }
     // В случае, если сканирущая линия сама по себе не содержит ошибок (а это может быть, если,
     // например, на картинке "грязь" или это вообще не штрихкод, или отчернобеливание изображения не совсем корректно(т.е. не такое как нам хотелось бы))
@@ -206,13 +213,13 @@
             vectorOfBarcodeNumbers[0] = i+1;
             short *cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][0]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            free(cutArray);
+            _free(cutArray);
             cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            free(cutArray);
+            _free(cutArray);
             cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            free(cutArray);
+            _free(cutArray);
         }
     }
     // Прошли первые 6 (или 7, если считать с самой первой, вынесенной за штрихкод) цифр
@@ -225,7 +232,7 @@
     // Шаг 2.3 Распознаем оставшиеся 6 цифр (правые)
     for (int k = 7; k < 13; k++) {
         if (startIndexForBarcode >= width) {
-            for (short i = 0; i < 13; i++) {
+            for (short i = 7; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -4;
             }
             return vectorOfBarcodeNumbers;
@@ -236,14 +243,15 @@
                                                                      WithStartIndex:&startIndexForBarcode
                                                                                  WithWidth:(int) width];
         if (startIndexForBarcode >= width) {
-            for (short i = 0; i < 13; i++) {
+            for (short i = 7; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
             }
+            _free(bitArrayForOneNumber);
             return vectorOfBarcodeNumbers;
         }
 
         vectorOfBarcodeNumbers[k] = [self decodeRightNumberWithBitArrayForOneNumber:bitArrayForOneNumber];
-        free(bitArrayForOneNumber);
+        _free(bitArrayForOneNumber);
     }
     return vectorOfBarcodeNumbers;
 }
@@ -257,7 +265,7 @@
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
     // Этот метод учитывает, что изображения "неидеальны", и делает компрессию куска сканирующей линии с учетом этого факта.
 
-    short *numberBitsVecTemp = calloc(7, sizeof(short));
+    short *numberBitsVecTemp = _calloc(7, sizeof(short));
     for (int i = 0; i < 7; i++) {
         numberBitsVecTemp[i] = 2;
     }
@@ -300,7 +308,7 @@
     NSUInteger bitsPerComponent = 8;
     
     UInt32 *pixels;
-    pixels = (UInt32 *) calloc(height * width, sizeof(UInt32));// можно  pixels = calloc(height * width, sizeof(UInt32));
+    pixels = (UInt32 *) _calloc(height * width, sizeof(UInt32));// можно  pixels = _calloc(height * width, sizeof(UInt32));
     
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -331,7 +339,7 @@
     }
     
     //2.1 end
-    short **arrayForImage = calloc(height, sizeof(short*));
+    short **arrayForImage = _calloc(height, sizeof(short*));
     for (int i = 0; i < height; i++) {
         arrayForImage[i] = calloc(width, sizeof(short));
     }
@@ -355,12 +363,12 @@
         // printf("\n");
 //2.end
     }
-    free(pixels);
+    _free(pixels);
     return arrayForImage;
 }
 
 -(short *) cutArrayFromArray:(short *) bitArrayOfSixNumbers withIndex:(int)index{
-    short *resArray = calloc(7, sizeof(short));
+    short *resArray = _calloc(7, sizeof(short));
    // short resArray[7];
     for(int i = 0; i < 7; i++){
         resArray[i] = bitArrayOfSixNumbers[7 * (index - 1) + i];
