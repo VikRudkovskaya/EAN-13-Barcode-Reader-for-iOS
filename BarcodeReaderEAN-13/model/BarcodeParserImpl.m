@@ -348,6 +348,7 @@ static NSInteger _allocCount = 0;
         arrayForImage[i] = calloc(width, sizeof(short));
     }
     currentPixel = pixels;
+    averageColor = averageColor - 10; // - 10 лучше
     for (NSUInteger i = 0; i < height; i++) {
         for (NSUInteger j = 0; j < width; j++) {
             UInt32 color = *currentPixel;
