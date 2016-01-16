@@ -30,7 +30,7 @@ static NSInteger _allocCount = 0;
     NSUInteger height = image.size.height;
     NSUInteger width = image.size.width;
     printf("высота ");
-    printf("%d", (int)height);
+    printf("%d    ", (int)height);
     printf("\n");
     NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
     // Шаг 1.1 Задаем исходное значение высоты, на которой пройдет сканирущая линия
@@ -64,7 +64,8 @@ static NSInteger _allocCount = 0;
         vectorScanLine = arrayFromImage[h];
         int i = 0;
         int k = 0;
-        // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в строке меньше 29), то нет смысла её проверять вообще
+        // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в
+        //строке меньше 29), то нет смысла её проверять вообще
         while (i < width) {
             if (vectorScanLine[i] > 0) {
                 k++;
@@ -76,9 +77,9 @@ static NSInteger _allocCount = 0;
             continue;
         }
         
-        printf("%d", h);
-        printf("\n");
-        _free(recognizedNumbers);
+        printf("%d    ", h);
+        ///printf("\n");
+        free(recognizedNumbers);
         recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
         //checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
         countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
@@ -109,8 +110,8 @@ static NSInteger _allocCount = 0;
     for (int i = 0; i < height; i++) {
         free(arrayFromImage[i]);
     }
-    _free(arrayFromImage);
-    _free(recognizedNumbers);
+    free(arrayFromImage);
+    free(recognizedNumbers);
     NSLog(@"TEST %@", @(_allocCount));
     return returnStringFromArray;
 }
@@ -154,7 +155,7 @@ static NSInteger _allocCount = 0;
                                                                                               WithEndIndex:endIndexForBarcode];
     
     // Шаг 1.3 В даннный массив (vectorOfBarcodeNumbers) будут записываться распознанные цифры
-    short *vectorOfBarcodeNumbers = _calloc(13, sizeof(short));
+    short *vectorOfBarcodeNumbers = calloc(13, sizeof(short));
     // Пока ничего не известно о первой цифре, считаем, что локация == 0
     // Первая цифра "распознается" (вычисляется) только по положению трех из шести цифр в левой части штрихкода
     vectorOfBarcodeNumbers[0] = 0;
@@ -194,7 +195,7 @@ static NSInteger _allocCount = 0;
             for (short i = 0; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
             }
-            _free(bitArrayForOneNumber);
+            free(bitArrayForOneNumber);
             return vectorOfBarcodeNumbers;
         }
 
@@ -204,7 +205,7 @@ static NSInteger _allocCount = 0;
         shift = shift + 7;
         
         vectorOfBarcodeNumbers[k+1] = [self decodeLeftNumberLWithBitArrayForOneNumber:bitArrayForOneNumber];
-        _free(bitArrayForOneNumber);
+        free(bitArrayForOneNumber);
     }
     // В случае, если сканирущая линия сама по себе не содержит ошибок (а это может быть, если,
     // например, на картинке "грязь" или это вообще не штрихкод, или отчернобеливание изображения не совсем корректно(т.е. не такое как нам хотелось бы))
@@ -215,13 +216,13 @@ static NSInteger _allocCount = 0;
             vectorOfBarcodeNumbers[0] = i+1;
             short *cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][0]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            _free(cutArray);
+            free(cutArray);
             cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            _free(cutArray);
+            free(cutArray);
             cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][2]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
-            _free(cutArray);
+            free(cutArray);
         }
     }
     // Прошли первые 6 (или 7, если считать с самой первой, вынесенной за штрихкод) цифр
@@ -248,12 +249,12 @@ static NSInteger _allocCount = 0;
             for (short i = 7; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
             }
-            _free(bitArrayForOneNumber);
+            free(bitArrayForOneNumber);
             return vectorOfBarcodeNumbers;
         }
 
         vectorOfBarcodeNumbers[k] = [self decodeRightNumberWithBitArrayForOneNumber:bitArrayForOneNumber];
-        _free(bitArrayForOneNumber);
+        free(bitArrayForOneNumber);
     }
     return vectorOfBarcodeNumbers;
 }
@@ -267,7 +268,7 @@ static NSInteger _allocCount = 0;
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
     // Этот метод учитывает, что изображения "неидеальны", и делает компрессию куска сканирующей линии с учетом этого факта.
 
-    short *numberBitsVecTemp = _calloc(7, sizeof(short));
+    short *numberBitsVecTemp = calloc(7, sizeof(short));
     for (int i = 0; i < 7; i++) {
         numberBitsVecTemp[i] = 2;
     }
@@ -312,7 +313,7 @@ static NSInteger _allocCount = 0;
     NSUInteger bitsPerComponent = 8;
     
     UInt32 *pixels;
-    pixels = (UInt32 *) _calloc(height * width, sizeof(UInt32));// можно  pixels = _calloc(height * width, sizeof(UInt32));
+    pixels = (UInt32 *) calloc(height * width, sizeof(UInt32));// можно  pixels = _calloc(height * width, sizeof(UInt32));
     
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -343,12 +344,12 @@ static NSInteger _allocCount = 0;
     }
     
     //2.1 end
-    short **arrayForImage = _calloc(height, sizeof(short*));
+    short **arrayForImage = calloc(height, sizeof(short*));
     for (int i = 0; i < height; i++) {
         arrayForImage[i] = calloc(width, sizeof(short));
     }
     currentPixel = pixels;
-    averageColor = averageColor - 5; // - 10 лучше
+    averageColor = averageColor - 10; // - 10 лучше
     for (NSUInteger i = 0; i < height; i++) {
         for (NSUInteger j = 0; j < width; j++) {
             UInt32 color = *currentPixel;
@@ -368,12 +369,12 @@ static NSInteger _allocCount = 0;
         // printf("\n");
 //2.end
     }
-    _free(pixels);
+    free(pixels);
     return arrayForImage;
 }
 
 -(short *) cutArrayFromArray:(short *) bitArrayOfSixNumbers withIndex:(int)index{
-    short *resArray = _calloc(7, sizeof(short));
+    short *resArray = calloc(7, sizeof(short));
    // short resArray[7];
     for(int i = 0; i < 7; i++){
         resArray[i] = bitArrayOfSixNumbers[7 * (index - 1) + i];
