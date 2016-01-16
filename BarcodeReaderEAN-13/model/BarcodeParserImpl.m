@@ -31,7 +31,6 @@ static NSInteger _allocCount = 0;
     NSUInteger width = image.size.width;
     printf("высота ");
     printf("%d    ", (int)height);
-    printf("\n");
     NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
     // Шаг 1.1 Задаем исходное значение высоты, на которой пройдет сканирущая линия
     int h = round(height / 2 + 5); // Экспериментальным способом установлено, что + 5 лучше
