@@ -92,7 +92,7 @@ static NSInteger _allocCount = 0;
             printf("%d", recognizedNumbers[i]);
         }
         printf("\n");
-        h = h + 10;
+        h = h + 1;
     }
     
 // Шаг 3. Преобразование в строку
@@ -219,7 +219,7 @@ static NSInteger _allocCount = 0;
             cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
             _free(cutArray);
-            cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
+            cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][2]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
             _free(cutArray);
         }
@@ -348,7 +348,7 @@ static NSInteger _allocCount = 0;
         arrayForImage[i] = calloc(width, sizeof(short));
     }
     currentPixel = pixels;
-    averageColor = averageColor - 10; // - 10 лучше
+    averageColor = averageColor - 5; // - 10 лучше
     for (NSUInteger i = 0; i < height; i++) {
         for (NSUInteger j = 0; j < width; j++) {
             UInt32 color = *currentPixel;
