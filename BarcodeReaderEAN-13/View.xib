@@ -20,7 +20,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-kY-jVg">
                     <rect key="frame" x="8" y="76" width="304" height="206"/>
-                    <color key="backgroundColor" red="0.92261904760000002" green="0.8831485402" blue="0.2972671516" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.34199104409999997" green="0.55946606320000003" blue="0.66304347829999999" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Результат" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLc-As-L9x">
                     <rect key="frame" x="8" y="470" width="304" height="43"/>

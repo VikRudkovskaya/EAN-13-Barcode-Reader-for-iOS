@@ -29,8 +29,6 @@ static NSInteger _allocCount = 0;
 // Шаг 1. Подготовка
     NSUInteger height = image.size.height;
     NSUInteger width = image.size.width;
-    printf("высота ");
-    printf("%d    ", (int)height);
     NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
     // Шаг 1.1 Задаем исходное значение высоты, на которой пройдет сканирущая линия
     int h = round(height / 2 + 5); // Экспериментальным способом установлено, что + 5 лучше
@@ -47,10 +45,7 @@ static NSInteger _allocCount = 0;
     for (short i = 0; i < 13; i++) {
         bestRecognizedNumbers[i] = recognizedNumbers[i];
     }
-    for(int i = 0; i < 13; i++){
-        printf("%d", bestRecognizedNumbers[i]);
-    }
-    printf("\n");
+    
     // Считаем контрольную сумму для полученных распознанных цифр. Если контрольная сумма корректна, то возвращаем true
     //BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
@@ -76,8 +71,6 @@ static NSInteger _allocCount = 0;
             continue;
         }
         
-        printf("%d    ", h);
-        ///printf("\n");
         free(recognizedNumbers);
         recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
         //checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
@@ -88,10 +81,6 @@ static NSInteger _allocCount = 0;
                 countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
             }
         }
-        for(int i = 0; i < 13; i++){
-            printf("%d", recognizedNumbers[i]);
-        }
-        printf("\n");
         h = h + 1;
     }
     
@@ -111,7 +100,7 @@ static NSInteger _allocCount = 0;
     }
     free(arrayFromImage);
     free(recognizedNumbers);
-    NSLog(@"TEST %@", @(_allocCount));
+    // NSLog(@"TEST %@", @(_allocCount));
     return returnStringFromArray;
 }
 
