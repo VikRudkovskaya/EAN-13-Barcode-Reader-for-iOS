@@ -31,6 +31,7 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8d3-zq-nCl">
                     <rect key="frame" x="110" y="366" width="101" height="62"/>
                     <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="26"/>
                     <state key="normal" title="Start!">
                         <color key="titleColor" red="0.77647058820000003" green="0.28627450980000002" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -43,7 +44,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                     <state key="normal" title="Загрузить штрихкод">
-                        <color key="titleColor" red="0.34199104409999997" green="0.55946606320000003" blue="0.66304347829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.31081090020000002" green="0.50841299929999995" blue="0.6025390625" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
                         <action selector="loadButtonFromGalleryPressedAction:" destination="-1" eventType="touchUpInside" id="w17-Pt-esz"/>

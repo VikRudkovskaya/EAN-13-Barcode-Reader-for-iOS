@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BarcodeReaderEAN-13/model/BarcodeParserImpl.m"
-            timestampString = "474685542.831842"
+            timestampString = "474745201.882791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "-bitCompressionOfDashInVectorWithVectorScanLine:WithAveragePixelsInSimpleDash:WithStartIndex:WithWidth:"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BarcodeReaderEAN-13/model/BarcodeParserImpl.m"
-            timestampString = "474685542.831842"
+            timestampString = "474745201.882791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "-barcodeFromImage:"
             landmarkType = "5">
          </BreakpointContent>

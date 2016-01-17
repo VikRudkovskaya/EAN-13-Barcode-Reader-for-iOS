@@ -87,10 +87,20 @@ static NSInteger _allocCount = 0;
 // Шаг 3. Преобразование в строку
     for (int i = 0; i < 13; i++) {
         if (i == 1 || i == 7) {
-            [returnStringFromArray appendFormat:@"    %d", bestRecognizedNumbers[i]];
+            if (bestRecognizedNumbers[i] < 0) {
+                [returnStringFromArray appendFormat:@"    %s", "*"];
+            }
+            else {
+                [returnStringFromArray appendFormat:@"    %d", bestRecognizedNumbers[i]];
+            }
         }
         else{
-            [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
+            if (bestRecognizedNumbers[i] < 0) {
+                [returnStringFromArray appendFormat:@" %s", "*"];
+            }
+            else{
+                [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
+            }
         }
     }
     
