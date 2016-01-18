@@ -16,14 +16,14 @@
 
 @implementation BarcodeParserImpl
 
-void callocCheck() {
+//void callocCheck() {
 //    NSLog(@"ttt");
-}
-
-static NSInteger _allocCount = 0;
-
-#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
-#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
+//}
+//
+//static NSInteger _allocCount = 0;
+//
+//#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
+//#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
 
 -(NSString*)barcodeFromImage:(UIImage *)image{
 // Шаг 1. Подготовка
@@ -52,8 +52,8 @@ static NSInteger _allocCount = 0;
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
     short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
     h = 1; // Задаем новую высоту
-    // Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз
-    // До тех пор пока
+    // Если есть нераспознанные цифры или контрольная сумма не сошлась, то запускаем алгоритм распознавания еще раз.
+    // До тех пор пока есть нераспознанные цифры.
     while (countOfUnrecognizedNumbersInBarcode > 0  && h < height) {
         vectorScanLine = arrayFromImage[h];
         int i = 0;
@@ -183,7 +183,7 @@ static NSInteger _allocCount = 0;
             }
             return vectorOfBarcodeNumbers;
         }
-
+        // Шаг 2.1.1 Делаем сжатие куска сканирующей линии, чтобы получит  последовательность
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
                                                       WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
                                                                      WithStartIndex:&startIndexForBarcode
