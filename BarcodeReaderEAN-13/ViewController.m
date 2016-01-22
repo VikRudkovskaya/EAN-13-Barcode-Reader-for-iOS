@@ -14,8 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
 @property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
-
 @property (strong, nonatomic) IBOutlet UILabel *resultAlgorithmLabel;
+@property (assign) CGFloat t;
 
 @end
 

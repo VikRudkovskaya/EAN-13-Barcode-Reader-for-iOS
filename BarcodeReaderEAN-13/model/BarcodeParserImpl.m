@@ -183,12 +183,14 @@
             }
             return vectorOfBarcodeNumbers;
         }
-        // Шаг 2.1.1 Делаем сжатие куска сканирующей линии, чтобы получит  последовательность
+        // Шаг 2.1.1 Делаем сжатие куска сканирующей линии, чтобы получить последовательность семи нулей-единиц
+        // (в этой последовательности закодирована одна цифра от 0 до 9)
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
                                                       WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
                                                                      WithStartIndex:&startIndexForBarcode
                                                                                  WithWidth:(int)width];
-        
+        // Шаг 2.1.2 Проверяем стартовый индекс на "адекватность", неадекватный стартовый индекс может получиться,
+        // если сканирующая линия некорректна
         if (startIndexForBarcode >= endIndexForBarcode) {
             for (short i = 0; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
@@ -206,7 +208,8 @@
         free(bitArrayForOneNumber);
     }
     // В случае, если сканирущая линия сама по себе не содержит ошибок (а это может быть, если,
-    // например, на картинке "грязь" или это вообще не штрихкод, или отчернобеливание изображения не совсем корректно(т.е. не такое как нам хотелось бы))
+    // например, на картинке "грязь" или это вообще не штрихкод, или отчернобеливание изображения не совсем корректно
+    // (т.е. не такое как нам хотелось бы))
     // и при этом самая первая цифра не 0, то нужно дораспознать оставшиеся нераскодированные 3 цифры
     short decodeTableForRegion[9][3] = {{3,5,6}, {3,4,6},{3,4,5},{2,5,6},{2,3,6},{2,3,4},{2,4,6},{2,4,5},{2,3,5}};
     for (short i = 0; i < 8; i++) {
@@ -450,7 +453,7 @@ res;})\
     if(compareWithPattern(bitArrayForOneNumber, ((short[7]){0, 0, 1, 0, 1, 1, 1}))) {
         return 9;
     }
-    return -2;//не совпало ни с одним шаблоном
+    return -2; //не совпало ни с одним шаблоном
 }
 -(short)decodeRightNumberWithBitArrayForOneNumber:(short *)bitArrayForOneNumber{
     if (compareWithPattern(bitArrayForOneNumber, ((short[7]){1, 1, 1, 0, 0, 1, 0}))) {
@@ -483,13 +486,16 @@ res;})\
     if (compareWithPattern(bitArrayForOneNumber, ((short[7]){1, 1, 1, 0, 1, 0, 0}))) {
         return 9;
     }
-    return -1; //-1 сигнализирует о том, что в L-кодировке число не распознано
+    return -1; //-1 сигнализирует о том, что в R-кодировке число не распознано
 
 
 }
 
 
--(int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode WithVectorScanLine:(short *) vectorScanLine WithWidth:(int) width{// дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черную полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с помощью череды циклов, но зато понятно
+-(int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode WithVectorScanLine:(short *) vectorScanLine WithWidth:(int) width{
+    // Дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черн
+    //ую полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с п
+    //омощью череды циклов, но зато понятно
     while (vectorScanLine[startIndexForBarcode] == 1 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }
