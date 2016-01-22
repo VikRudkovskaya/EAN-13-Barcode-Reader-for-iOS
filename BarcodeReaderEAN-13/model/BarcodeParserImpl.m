@@ -30,11 +30,11 @@
     NSUInteger height = image.size.height;
     NSUInteger width = image.size.width;
     NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
-    // Шаг 1.1 Задаем исходное значение высоты, на которой пройдет сканирущая линия
+    // Задаем исходное значение высоты, на которой пройдет сканирущая линия
     int h = round(height / 2 + 5); // Экспериментальным способом установлено, что + 5 лучше
-    // Шаг 1.0 Делаем массив 1-0 из фото
+    // Делаем массив 1-0 из фото
     short **arrayFromImage = [self blackAndWhiteArrayCFromImage:image];
-    // Шаг 1.1 Выделяем из массива сканирующую линию
+    // Выделяем из массива сканирующую линию
     short *vectorScanLine;
     vectorScanLine = arrayFromImage[h];
 
