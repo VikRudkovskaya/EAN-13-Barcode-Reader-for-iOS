@@ -8,16 +8,14 @@
 
 #import "BarcodeParserEAN13.h"
 
-@implementation BarcodeParserEAN13
+/*
+* -4, -5, - некорректное отчернобеливание изображения или в сканирующую линию попал не баркод
+* -3 - сканирущая линия прошла ниже или выше штрихкода
+* -1 - не прошел по L-шаблону, может быть ошибка парсера
+* -2 - не совпало ни с одним шаблоном – ошибка парсера
+*/
 
-//void callocCheck() {
-//    NSLog(@"ttt");
-//}
-//
-//static NSInteger _allocCount = 0;
-//
-//#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
-//#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
+@implementation BarcodeParserEAN13
 
 - (NSString *)barcodeFromImage:(UIImage *)image {
     
@@ -40,7 +38,7 @@
 // Шаг 2. Распознавание
     short bestRecognizedNumbers[13];
     // Шаг 2.1 Распознаем штрихкод на исходной высоте
-    short *recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
+    short *recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine width:(int)width];
     for (short i = 0; i < 13; i++) {
         bestRecognizedNumbers[i] = recognizedNumbers[i];
     }
@@ -71,7 +69,7 @@
         }
         
         free(recognizedNumbers);
-        recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine WithWidth:(int)width];
+        recognizedNumbers = [self recognitionAlgorithmWithScanLine:vectorScanLine width:(int)width];
         //checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
         countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
         if (countOfUnrecognizedNumbersInBarcode < countOfUnrecognizedNumbersForBestRecognizedBarcode) {
@@ -114,7 +112,14 @@
 }
 
 // Метод считает контрольную сумму полученных распознанных цифр. Если сумма корректна, то возвращается true
--(BOOL) checkControlSummOfRecognizedNumbers:(short *)recognizedNumbers{
+
+/* Суммируются все цифры на чётных позициях (вторая, четвёртая, шестая, и т. д.) и результат умножается на три.
+ * Суммируются все цифры на нечётных позициях (первая, третья, пятая, и т. д.)
+ * Обе суммы складываются, и от полученного результата оставляется только последняя цифра
+ * Эту цифру вычитают из 10
+ * Конечный результат этих вычислений и есть контрольная цифра (десятке соответствует цифра 0)
+ */
+- (BOOL)checkControlSummOfRecognizedNumbers:(short *)recognizedNumbers {
     int sum = 0;
     for (short i = 0; i < 12; i++) {
         if (i % 2 == 0) {
@@ -131,7 +136,7 @@
 }
 
 // Метод вычисляет количество нераспознанных цифр в штрихкоде
--(short) calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:(short *)recognizedNumbers{
+- (short) calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:(short *)recognizedNumbers {
     short countOfUnrecognizedNumbersInBarcode = 0;
     for (int i = 1; i < 13; i++) {
         if (recognizedNumbers[i] < 0) {
@@ -141,15 +146,15 @@
     return countOfUnrecognizedNumbersInBarcode;
 }
 
--(short *) recognitionAlgorithmWithScanLine:(short *) vectorScanLine WithWidth:(int) width{
+- (short *)recognitionAlgorithmWithScanLine:(short *) vectorScanLine width:(int) width {
 // Шаг 1. Подготовка
     // Шаг 1.1 Считаем индексы до начала и конца штрихкода - первых и последних двух вертикальных полос
     // (предпоагаю, что с левого и правого края белый фон, т.е. нули)
-    int startIndexForBarcode = [self calculateStartIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width];
+    int startIndexForBarcode = [self calculateStartIndexOfBarcodeWithVectorScanLine:vectorScanLine width:width];
     int endIndexForBarcode = [self calculateEndIndexOfBarcodeFromVectorScanLine:vectorScanLine withWidth:width];
     // Шаг 1.2 Вычисляем мат ожидание длины элементарного штриха
     float averageCountOfPixelsInSimpleDash = [self calculateAverageCountOfPixelsInSimpleDashWithStartIndex:startIndexForBarcode
-                                                                                              WithEndIndex:endIndexForBarcode];
+                                                                                                  endIndex:endIndexForBarcode];
     
     // Шаг 1.3 В даннный массив (vectorOfBarcodeNumbers) будут записываться распознанные цифры
     short *vectorOfBarcodeNumbers = calloc(13, sizeof(short));
@@ -167,8 +172,8 @@
     
     // Шаг 1.5 Пропускаем первые две вертикальные линии
     startIndexForBarcode = [self calculateStartIndexToSignificantNumbersWithStartIndex:startIndexForBarcode
-                                                                    WithVectorScanLine:vectorScanLine
-                                                                             WithWidth:width];
+                                                                        vectorScanLine:vectorScanLine
+                                                                                 width:width];
 // Шаг 2 Распознавание
     int shift = 0;
     // В массив bitArrayForSixLeftNumbers будем записывать сжатые в значащий битовый вид со второй по седьмую цифры (первые 6 левых без самой первой)
@@ -210,17 +215,17 @@
     // например, на картинке "грязь" или это вообще не штрихкод, или отчернобеливание изображения не совсем корректно
     // (т.е. не такое как нам хотелось бы))
     // и при этом самая первая цифра не 0, то нужно дораспознать оставшиеся нераскодированные 3 цифры
-    short decodeTableForRegion[9][3] = {{3,5,6}, {3,4,6},{3,4,5},{2,5,6},{2,3,6},{2,3,4},{2,4,6},{2,4,5},{2,3,5}};
+    short decodeTableForRegion[9][3] = {{3,5,6}, {3,4,6}, {3,4,5}, {2,5,6}, {2,3,6}, {2,3,4}, {2,4,6}, {2,4,5}, {2,3,5}};
     for (short i = 0; i < 8; i++) {
         if (vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] == -1 && vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] == -1 && vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] == -1) {
             vectorOfBarcodeNumbers[0] = i+1;
-            short *cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][0]];
+            short *cutArray = [self cutArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][0]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][0]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
             free(cutArray);
-            cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
+            cutArray = [self cutArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][1]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][1]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
             free(cutArray);
-            cutArray = [self cutArrayFromArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][2]];
+            cutArray = [self cutArray:bitArrayForSixLeftNumbers withIndex:decodeTableForRegion[i][2]];
             vectorOfBarcodeNumbers[decodeTableForRegion[i][2]] = [self decodeLeftNumberGWithBitArrayForOneNumber:cutArray];
             free(cutArray);
         }
@@ -229,8 +234,8 @@
     
     // Шаг 2.2 Дошли до центральных длинных вертикальных линий - пропускаем их, это не значащая часть штрихкода
     startIndexForBarcode = [self calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:startIndexForBarcode
-                                                                                WithVectorScanLine:vectorScanLine
-                                                                                         WithWidth:(int) width];
+                                                                                    vectorScanLine:vectorScanLine
+                                                                                             width:(int) width];
     
     // Шаг 2.3 Распознаем оставшиеся 6 цифр (правые)
     for (int k = 7; k < 13; k++) {
@@ -256,13 +261,14 @@
         vectorOfBarcodeNumbers[k] = [self decodeRightNumberWithBitArrayForOneNumber:bitArrayForOneNumber];
         free(bitArrayForOneNumber);
     }
+    
     return vectorOfBarcodeNumbers;
 }
 
--(short *) bitCompressionOfDashInVectorWithVectorScanLine:(short *) vectorScanLine
+- (short *) bitCompressionOfDashInVectorWithVectorScanLine:(short *) vectorScanLine
                             WithAveragePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
                                            WithStartIndex:(int *)startIndexForBarcodeOut
-                                                WithWidth:(int)width{
+                                                WithWidth:(int)width {
     // В идеальном случае число пикселей в каждой элементарной вертикальной черте можно точно вычислить (пиксельная длина
     // баркода будет кратна 95, соответсвенно на каждую элементарную черту придется одинаковое число пикселей).
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
@@ -301,7 +307,8 @@
     
 }
 
--(short **) blackAndWhiteArrayCFromImage:(UIImage *)image{ //делает из картинки "отчернобеленный" 0-1 массив
+#pragma mark - СonversionToBitmap
+- (short **) blackAndWhiteArrayCFromImage:(UIImage *)image { //делает из картинки "отчернобеленный" 0-1 массив
 // Шаг 1. Делаем из исходного UIImage битовую картинку
     //http://www.raywenderlich.com/69855/image-processing-in-ios-part-1-raw-bitmap-modification
     CGImageRef inputCGImage = [image CGImage];
@@ -373,7 +380,7 @@
     return arrayForImage;
 }
 
--(short *) cutArrayFromArray:(short *) bitArrayOfSixNumbers withIndex:(int)index{
+- (short *) cutArray:(short *) bitArrayOfSixNumbers withIndex:(int)index {
     short *resArray = calloc(7, sizeof(short));
    // short resArray[7];
     for(int i = 0; i < 7; i++){
@@ -382,13 +389,16 @@
     return resArray;
 }
 
+#pragma mark - CompareWithPatterns
+
 #define compareWithPattern(arr, pat) ({BOOL res = YES;\
 for (int i = 0; i < 7; i++) {\
 if (arr[i]!=pat[i]) { res = NO; }\
 }\
 res;})\
 
--(short)decodeLeftNumberLWithBitArrayForOneNumber:(short *) bitArrayForOneNumber{
+- (short)decodeLeftNumberLWithBitArrayForOneNumber:(short *)bitArrayForOneNumber {
+    
     if (compareWithPattern(bitArrayForOneNumber, ((short[7]){0, 0, 0, 1, 1, 0, 1}))) {
         return 0;
     }
@@ -421,7 +431,9 @@ res;})\
     }
     return -1; //-1 сигнализирует о том, что в L-кодировке число не распознано
 }
--(short)decodeLeftNumberGWithBitArrayForOneNumber:(short *)bitArrayForOneNumber{
+
+- (short)decodeLeftNumberGWithBitArrayForOneNumber:(short *)bitArrayForOneNumber {
+    
     if(compareWithPattern(bitArrayForOneNumber, ((short[7]){0, 1, 0, 0, 1, 1, 1}))) {
         return 0;
     }
@@ -454,7 +466,9 @@ res;})\
     }
     return -2; //не совпало ни с одним шаблоном
 }
--(short)decodeRightNumberWithBitArrayForOneNumber:(short *)bitArrayForOneNumber{
+
+- (short)decodeRightNumberWithBitArrayForOneNumber:(short *)bitArrayForOneNumber {
+    
     if (compareWithPattern(bitArrayForOneNumber, ((short[7]){1, 1, 1, 0, 0, 1, 0}))) {
         return 0;
     }
@@ -488,11 +502,12 @@ res;})\
     return -1; //-1 сигнализирует о том, что в R-кодировке число не распознано
 }
 
+#pragma mark - CalculationIndices
 
--(int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode WithVectorScanLine:(short *) vectorScanLine WithWidth:(int) width{
-    // Дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черн
-    //ую полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с п
-    //омощью череды циклов, но зато понятно
+- (int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode vectorScanLine:(short *) vectorScanLine width:(int) width {
+    // Дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черную
+    // полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с
+    // помощью череды циклов, но зато понятно
     while (vectorScanLine[startIndexForBarcode] == 1 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }
@@ -505,7 +520,10 @@ res;})\
     }
     return startIndexForBarcode;
 }
--(int)calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:(int)startIndexForBarcode WithVectorScanLine:(short *) vectorScanLine WithWidth:(int)width{
+
+- (int)calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:(int)startIndexForBarcode
+                                                          vectorScanLine:(short *) vectorScanLine
+                                                                   width:(int)width {
     int zeroOrOneMarker = 0;
     int middleDashes = 0;
     while (middleDashes < 5 && startIndexForBarcode < width) {
@@ -517,23 +535,35 @@ res;})\
     }
     return startIndexForBarcode;
 }
--(float)calculateAverageCountOfPixelsInSimpleDashWithStartIndex:(int)startIndexForBarcode WithEndIndex:(int)endIndexForBarcode{
+
+- (float)calculateAverageCountOfPixelsInSimpleDashWithStartIndex:(int)startIndexForBarcode endIndex:(int)endIndexForBarcode {
     float averageCountOfPixelsInSimpleDash = (endIndexForBarcode - startIndexForBarcode + 1) / 95.f;
     return averageCountOfPixelsInSimpleDash;
 }
--(int)calculateStartIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth: (NSUInteger)width{
+
+- (int)calculateStartIndexOfBarcodeWithVectorScanLine:(short *)vectorScanLine width:(NSUInteger)width {
     int startIndexForBarcode = 0;
     while (vectorScanLine[startIndexForBarcode] == 0 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }
     return startIndexForBarcode;
 }
--(int)calculateEndIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth:(NSUInteger) width{
+
+- (int)calculateEndIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth:(NSUInteger) width {
     int endIndexForBarcode = (int)width - 1;
     while (vectorScanLine[endIndexForBarcode] == 0 && endIndexForBarcode > 1) {
         endIndexForBarcode = endIndexForBarcode - 1;
     }
     return endIndexForBarcode;
 }
+
+//void callocCheck() {
+//    NSLog(@"ttt");
+//}
+//
+//static NSInteger _allocCount = 0;
+//
+//#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
+//#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
 
 @end
