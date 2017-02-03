@@ -11,9 +11,9 @@
 
 @interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>;
 
-@property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
 @property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
-@property (strong, nonatomic) IBOutlet UILabel *resultAlgorithmLabel;
+@property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
+@property (strong, nonatomic) IBOutlet UITextView *resultAlgorithmTextView;
 
 @end
 
@@ -21,13 +21,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setupUI];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - UI
+
+- (void)setupUI {
+    
+}
+
+#pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
     NSData *dataImageFromGallery = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.6);
     UIImage *imageFromGallery = [[UIImage alloc] initWithData:dataImageFromGallery];
     self.loadedImageFromGallery.image = imageFromGallery;
@@ -36,8 +46,8 @@
 }
 
 #pragma mark - IBActions
-
 - (IBAction)loadButtonFromGalleryPressedAction:(id)sender {
+    
     UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
     pickerController.delegate = self;
     pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -46,9 +56,10 @@
 }
 
 - (IBAction)startButtonPressed:(id)sender {
+    
     BarcodeParserEAN13 *barcodeParser = [[BarcodeParserEAN13 alloc] init];
     NSString *str = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
-   self.resultAlgorithmLabel.text = str;
+    self.resultAlgorithmTextView.text = str;
 }
 
 @end
