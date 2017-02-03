@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9208EC941E44B4C9002F72BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC841E44B4C9002F72BE /* AppDelegate.m */; };
-		9208EC951E44B4C9002F72BE /* BarcodeParserImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */; };
-		9208EC971E44B4C9002F72BE /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC8C1E44B4C9002F72BE /* View.xib */; };
-		9208EC981E44B4C9002F72BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC8E1E44B4C9002F72BE /* ViewController.m */; };
+		9208EC951E44B4C9002F72BE /* BarcodeParserEAN13.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC881E44B4C9002F72BE /* BarcodeParserEAN13.m */; };
+		9208EC971E44B4C9002F72BE /* BRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC8C1E44B4C9002F72BE /* BRViewController.xib */; };
+		9208EC981E44B4C9002F72BE /* BRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC8E1E44B4C9002F72BE /* BRViewController.m */; };
 		9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC901E44B4C9002F72BE /* Assets.xcassets */; };
 		9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC921E44B4C9002F72BE /* Info.plist */; };
 		9208EC9B1E44B4C9002F72BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC931E44B4C9002F72BE /* main.m */; };
@@ -39,11 +39,11 @@
 		9208EC831E44B4C9002F72BE /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9208EC841E44B4C9002F72BE /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9208EC861E44B4C9002F72BE /* BarcodeParserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserProtocol.h; sourceTree = "<group>"; };
-		9208EC871E44B4C9002F72BE /* BarcodeParserImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserImpl.h; sourceTree = "<group>"; };
-		9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeParserImpl.m; sourceTree = "<group>"; };
-		9208EC8C1E44B4C9002F72BE /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
-		9208EC8D1E44B4C9002F72BE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9208EC8E1E44B4C9002F72BE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9208EC871E44B4C9002F72BE /* BarcodeParserEAN13.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserEAN13.h; sourceTree = "<group>"; };
+		9208EC881E44B4C9002F72BE /* BarcodeParserEAN13.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeParserEAN13.m; sourceTree = "<group>"; };
+		9208EC8C1E44B4C9002F72BE /* BRViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BRViewController.xib; sourceTree = "<group>"; };
+		9208EC8D1E44B4C9002F72BE /* BRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRViewController.h; sourceTree = "<group>"; };
+		9208EC8E1E44B4C9002F72BE /* BRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRViewController.m; sourceTree = "<group>"; };
 		9208EC901E44B4C9002F72BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9208EC921E44B4C9002F72BE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9208EC931E44B4C9002F72BE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -106,8 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				9208EC861E44B4C9002F72BE /* BarcodeParserProtocol.h */,
-				9208EC871E44B4C9002F72BE /* BarcodeParserImpl.h */,
-				9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */,
+				9208EC871E44B4C9002F72BE /* BarcodeParserEAN13.h */,
+				9208EC881E44B4C9002F72BE /* BarcodeParserEAN13.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -115,9 +115,9 @@
 		9208EC891E44B4C9002F72BE /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9208EC8C1E44B4C9002F72BE /* View.xib */,
-				9208EC8D1E44B4C9002F72BE /* ViewController.h */,
-				9208EC8E1E44B4C9002F72BE /* ViewController.m */,
+				9208EC8C1E44B4C9002F72BE /* BRViewController.xib */,
+				9208EC8D1E44B4C9002F72BE /* BRViewController.h */,
+				9208EC8E1E44B4C9002F72BE /* BRViewController.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -281,7 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */,
-				9208EC971E44B4C9002F72BE /* View.xib in Resources */,
+				9208EC971E44B4C9002F72BE /* BRViewController.xib in Resources */,
 				9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,10 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9208EC981E44B4C9002F72BE /* ViewController.m in Sources */,
+				9208EC981E44B4C9002F72BE /* BRViewController.m in Sources */,
 				9208EC941E44B4C9002F72BE /* AppDelegate.m in Sources */,
 				9208EC9B1E44B4C9002F72BE /* main.m in Sources */,
-				9208EC951E44B4C9002F72BE /* BarcodeParserImpl.m in Sources */,
+				9208EC951E44B4C9002F72BE /* BarcodeParserEAN13.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

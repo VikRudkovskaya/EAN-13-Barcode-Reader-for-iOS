@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "BRViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.mainWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    ViewController *viewController = [[ViewController alloc] initWithNibName:@"View" bundle:nil];//[NSBundle mainBundle]];
+    BRViewController *viewController = [[BRViewController alloc] initWithNibName:@"BRViewController" bundle:nil]; //[NSBundle mainBundle]];
 
     //[self.mainWindow addSubview:viewController.view];
     self.mainWindow.rootViewController = viewController;

@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  BRViewController.h
 //  BarcodeReaderEAN-13
 //
 //  Created by Viktoria Rudkovskaya on 14.12.15.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface BRViewController : UIViewController
 
 @end
-
