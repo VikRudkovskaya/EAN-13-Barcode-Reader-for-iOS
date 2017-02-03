@@ -1,0 +1,13 @@
+language: objective-c
+
+osx_image: xcode8.2
+
+
+script: xcodebuild clean build -sdk iphonesimulator -project BarcodeReaderEAN-13.xcodeproj -scheme BarcodeReaderEAN-13
+
+notifications:
+  email:
+    recipients:
+        - vik-rudkovskaya@yandex.ru
+    on_success: always
+    on_failure: always
