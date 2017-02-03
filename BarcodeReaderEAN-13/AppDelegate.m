@@ -15,17 +15,15 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    ViewController *viewController = [[ViewController alloc] initWithNibName:@"View" bundle:nil];
-    
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//    [mainWindow addSubview:navigationController.view];
-    mainWindow.rootViewController = viewController; //navigationController;
-    [mainWindow makeKeyAndVisible];
-    self.mainWindow = mainWindow;
+    self.mainWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    ViewController *viewController = [[ViewController alloc] initWithNibName:@"View" bundle:nil];//[NSBundle mainBundle]];
+
+    //[self.mainWindow addSubview:viewController.view];
+    self.mainWindow.rootViewController = viewController;
+    [self.mainWindow makeKeyAndVisible];
+
     return YES;
 }
 
@@ -48,6 +46,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 
 }
-
 
 @end
