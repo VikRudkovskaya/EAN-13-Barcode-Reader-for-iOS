@@ -21,18 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupUI];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - UI
-
-- (void)setupUI {
-    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
