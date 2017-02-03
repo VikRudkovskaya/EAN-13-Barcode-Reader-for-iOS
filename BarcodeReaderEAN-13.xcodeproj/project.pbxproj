@@ -12,7 +12,6 @@
 		9208EC971E44B4C9002F72BE /* BRViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC8C1E44B4C9002F72BE /* BRViewController.xib */; };
 		9208EC981E44B4C9002F72BE /* BRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC8E1E44B4C9002F72BE /* BRViewController.m */; };
 		9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC901E44B4C9002F72BE /* Assets.xcassets */; };
-		9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC921E44B4C9002F72BE /* Info.plist */; };
 		9208EC9B1E44B4C9002F72BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC931E44B4C9002F72BE /* main.m */; };
 		F259406E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */; };
 		F25940791C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */; };
@@ -84,10 +83,10 @@
 		9208EC811E44B4C9002F72BE /* BarcodeReaderEAN-13 */ = {
 			isa = PBXGroup;
 			children = (
-				9208EC821E44B4C9002F72BE /* AppDelegate */,
 				9208EC851E44B4C9002F72BE /* Core */,
 				9208EC891E44B4C9002F72BE /* Presentation */,
 				9208EC8F1E44B4C9002F72BE /* Resources */,
+				9208EC821E44B4C9002F72BE /* AppDelegate */,
 				9208EC911E44B4C9002F72BE /* SupportingFiles */,
 			);
 			path = "BarcodeReaderEAN-13";
@@ -280,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */,
 				9208EC971E44B4C9002F72BE /* BRViewController.xib in Resources */,
 				9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */,
 			);
