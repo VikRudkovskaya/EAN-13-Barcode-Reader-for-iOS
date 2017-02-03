@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BarcodeParser.h"
-@interface BarcodeParserImpl : NSObject <BarcodeParser>
 
+@interface BarcodeParserImpl : NSObject <BarcodeParser>
 
 @end

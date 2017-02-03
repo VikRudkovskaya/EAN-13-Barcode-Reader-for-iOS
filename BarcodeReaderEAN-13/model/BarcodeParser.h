@@ -11,5 +11,7 @@
 
 @protocol BarcodeParser <NSObject>
 
-- (NSString *) barcodeFromImage: (UIImage *) image;
+@required
+- (NSString *)barcodeFromImage: (UIImage *) image;
+
 @end

@@ -13,7 +13,6 @@
 
 #import "BarcodeParserImpl.h"
 
-
 @implementation BarcodeParserImpl
 
 //void callocCheck() {
@@ -487,8 +486,6 @@ res;})\
         return 9;
     }
     return -1; //-1 сигнализирует о том, что в R-кодировке число не распознано
-
-
 }
 
 

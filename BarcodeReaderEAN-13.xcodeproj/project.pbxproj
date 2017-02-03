@@ -11,7 +11,6 @@
 		F25940551C1F2AEA00AD4239 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940541C1F2AEA00AD4239 /* AppDelegate.m */; };
 		F25940581C1F2AEA00AD4239 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940571C1F2AEA00AD4239 /* ViewController.m */; };
 		F259405B1C1F2AEB00AD4239 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F25940591C1F2AEB00AD4239 /* Main.storyboard */; };
-		F259405E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F259405C1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodeld */; };
 		F25940601C1F2AEB00AD4239 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F259405F1C1F2AEB00AD4239 /* Assets.xcassets */; };
 		F25940631C1F2AEB00AD4239 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F25940611C1F2AEB00AD4239 /* LaunchScreen.storyboard */; };
 		F259406E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */; };
@@ -45,7 +44,6 @@
 		F25940561C1F2AEA00AD4239 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F25940571C1F2AEA00AD4239 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F259405A1C1F2AEB00AD4239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F259405D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BarcodeReaderEAN_13.xcdatamodel; sourceTree = "<group>"; };
 		F259405F1C1F2AEB00AD4239 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F25940621C1F2AEB00AD4239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F25940641C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 				F25940611C1F2AEB00AD4239 /* LaunchScreen.storyboard */,
 				F259405F1C1F2AEB00AD4239 /* Assets.xcassets */,
 				F25940641C1F2AEB00AD4239 /* Info.plist */,
-				F259405C1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodeld */,
 				F25940501C1F2AEA00AD4239 /* Supporting Files */,
 			);
 			path = "BarcodeReaderEAN-13";
@@ -309,7 +306,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F259405E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodeld in Sources */,
 				F25940581C1F2AEA00AD4239 /* ViewController.m in Sources */,
 				F259408F1C26320800AD4239 /* BarcodeParserImpl.m in Sources */,
 				F25940551C1F2AEA00AD4239 /* AppDelegate.m in Sources */,
@@ -560,19 +556,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F259405C1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F259405D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodel */,
-			);
-			currentVersion = F259405D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13.xcdatamodel */;
-			path = BarcodeReaderEAN_13.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F25940451C1F2AEA00AD4239 /* Project object */;
 }
