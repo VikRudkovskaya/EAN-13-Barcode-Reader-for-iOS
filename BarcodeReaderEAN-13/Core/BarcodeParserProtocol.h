@@ -9,9 +9,9 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol BarcodeParser <NSObject>
+@protocol BarcodeParserProtocol <NSObject>
 
 @required
-- (NSString *)barcodeFromImage: (UIImage *) image;
+- (NSString *)barcodeFromImage:(UIImage *) image;
 
 @end

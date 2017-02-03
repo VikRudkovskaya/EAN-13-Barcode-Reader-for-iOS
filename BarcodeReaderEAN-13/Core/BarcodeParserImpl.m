@@ -24,7 +24,7 @@
 //#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
 //#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
 
--(NSString*)barcodeFromImage:(UIImage *)image{
+- (NSString*)barcodeFromImage:(UIImage *)image {
 // Шаг 1. Подготовка
     NSUInteger height = image.size.height;
     NSUInteger width = image.size.width;

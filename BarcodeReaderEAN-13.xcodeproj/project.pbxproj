@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F25940521C1F2AEA00AD4239 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940511C1F2AEA00AD4239 /* main.m */; };
-		F25940551C1F2AEA00AD4239 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940541C1F2AEA00AD4239 /* AppDelegate.m */; };
-		F25940581C1F2AEA00AD4239 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940571C1F2AEA00AD4239 /* ViewController.m */; };
-		F25940601C1F2AEB00AD4239 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F259405F1C1F2AEB00AD4239 /* Assets.xcassets */; };
-		F25940631C1F2AEB00AD4239 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F25940611C1F2AEB00AD4239 /* LaunchScreen.storyboard */; };
+		9208EC941E44B4C9002F72BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC841E44B4C9002F72BE /* AppDelegate.m */; };
+		9208EC951E44B4C9002F72BE /* BarcodeParserImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */; };
+		9208EC971E44B4C9002F72BE /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC8C1E44B4C9002F72BE /* View.xib */; };
+		9208EC981E44B4C9002F72BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC8E1E44B4C9002F72BE /* ViewController.m */; };
+		9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC901E44B4C9002F72BE /* Assets.xcassets */; };
+		9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9208EC921E44B4C9002F72BE /* Info.plist */; };
+		9208EC9B1E44B4C9002F72BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9208EC931E44B4C9002F72BE /* main.m */; };
 		F259406E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */; };
 		F25940791C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */; };
-		F25940871C1F2C9600AD4239 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = F25940861C1F2C9600AD4239 /* View.xib */; };
-		F259408F1C26320800AD4239 /* BarcodeParserImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = F259408E1C26320800AD4239 /* BarcodeParserImpl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,25 +36,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9208EC831E44B4C9002F72BE /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9208EC841E44B4C9002F72BE /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9208EC861E44B4C9002F72BE /* BarcodeParserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserProtocol.h; sourceTree = "<group>"; };
+		9208EC871E44B4C9002F72BE /* BarcodeParserImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserImpl.h; sourceTree = "<group>"; };
+		9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeParserImpl.m; sourceTree = "<group>"; };
+		9208EC8C1E44B4C9002F72BE /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
+		9208EC8D1E44B4C9002F72BE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9208EC8E1E44B4C9002F72BE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9208EC901E44B4C9002F72BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9208EC921E44B4C9002F72BE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9208EC931E44B4C9002F72BE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F259404D1C1F2AEA00AD4239 /* BarcodeReaderEAN-13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeReaderEAN-13.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F25940511C1F2AEA00AD4239 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F25940531C1F2AEA00AD4239 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		F25940541C1F2AEA00AD4239 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F25940561C1F2AEA00AD4239 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F25940571C1F2AEA00AD4239 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		F259405F1C1F2AEB00AD4239 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F25940621C1F2AEB00AD4239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		F25940641C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F25940691C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeReaderEAN-13Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderEAN_13Tests.m; sourceTree = "<group>"; };
 		F259406F1C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F25940741C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeReaderEAN-13UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderEAN_13UITests.m; sourceTree = "<group>"; };
 		F259407A1C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F25940861C1F2C9600AD4239 /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
-		F259408C1C24EAAE00AD4239 /* BarcodeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParser.h; sourceTree = "<group>"; };
-		F259408D1C26320800AD4239 /* BarcodeParserImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeParserImpl.h; sourceTree = "<group>"; };
-		F259408E1C26320800AD4239 /* BarcodeParserImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeParserImpl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,10 +81,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9208EC811E44B4C9002F72BE /* BarcodeReaderEAN-13 */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC821E44B4C9002F72BE /* AppDelegate */,
+				9208EC851E44B4C9002F72BE /* Core */,
+				9208EC891E44B4C9002F72BE /* Presentation */,
+				9208EC8F1E44B4C9002F72BE /* Resources */,
+				9208EC911E44B4C9002F72BE /* SupportingFiles */,
+			);
+			path = "BarcodeReaderEAN-13";
+			sourceTree = "<group>";
+		};
+		9208EC821E44B4C9002F72BE /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC831E44B4C9002F72BE /* AppDelegate.h */,
+				9208EC841E44B4C9002F72BE /* AppDelegate.m */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		9208EC851E44B4C9002F72BE /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC861E44B4C9002F72BE /* BarcodeParserProtocol.h */,
+				9208EC871E44B4C9002F72BE /* BarcodeParserImpl.h */,
+				9208EC881E44B4C9002F72BE /* BarcodeParserImpl.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9208EC891E44B4C9002F72BE /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC8C1E44B4C9002F72BE /* View.xib */,
+				9208EC8D1E44B4C9002F72BE /* ViewController.h */,
+				9208EC8E1E44B4C9002F72BE /* ViewController.m */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9208EC8F1E44B4C9002F72BE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC901E44B4C9002F72BE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9208EC911E44B4C9002F72BE /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				9208EC921E44B4C9002F72BE /* Info.plist */,
+				9208EC931E44B4C9002F72BE /* main.m */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		F25940441C1F2AEA00AD4239 = {
 			isa = PBXGroup;
 			children = (
-				F259404F1C1F2AEA00AD4239 /* BarcodeReaderEAN-13 */,
+				9208EC811E44B4C9002F72BE /* BarcodeReaderEAN-13 */,
 				F259406C1C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests */,
 				F25940771C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests */,
 				F259404E1C1F2AEA00AD4239 /* Products */,
@@ -100,30 +157,6 @@
 				F25940741C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F259404F1C1F2AEA00AD4239 /* BarcodeReaderEAN-13 */ = {
-			isa = PBXGroup;
-			children = (
-				F25940531C1F2AEA00AD4239 /* AppDelegate.h */,
-				F25940541C1F2AEA00AD4239 /* AppDelegate.m */,
-				F259408B1C24E11600AD4239 /* View */,
-				F25940891C24E0FE00AD4239 /* Controller */,
-				F25940881C24E0F000AD4239 /* Model */,
-				F25940611C1F2AEB00AD4239 /* LaunchScreen.storyboard */,
-				F259405F1C1F2AEB00AD4239 /* Assets.xcassets */,
-				F25940641C1F2AEB00AD4239 /* Info.plist */,
-				F25940501C1F2AEA00AD4239 /* Supporting Files */,
-			);
-			path = "BarcodeReaderEAN-13";
-			sourceTree = "<group>";
-		};
-		F25940501C1F2AEA00AD4239 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F25940511C1F2AEA00AD4239 /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F259406C1C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests */ = {
@@ -142,34 +175,6 @@
 				F259407A1C1F2AEB00AD4239 /* Info.plist */,
 			);
 			path = "BarcodeReaderEAN-13UITests";
-			sourceTree = "<group>";
-		};
-		F25940881C24E0F000AD4239 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				F259408C1C24EAAE00AD4239 /* BarcodeParser.h */,
-				F259408D1C26320800AD4239 /* BarcodeParserImpl.h */,
-				F259408E1C26320800AD4239 /* BarcodeParserImpl.m */,
-			);
-			name = Model;
-			path = model;
-			sourceTree = "<group>";
-		};
-		F25940891C24E0FE00AD4239 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				F25940561C1F2AEA00AD4239 /* ViewController.h */,
-				F25940571C1F2AEA00AD4239 /* ViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		F259408B1C24E11600AD4239 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				F25940861C1F2C9600AD4239 /* View.xib */,
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,9 +280,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F25940871C1F2C9600AD4239 /* View.xib in Resources */,
-				F25940631C1F2AEB00AD4239 /* LaunchScreen.storyboard in Resources */,
-				F25940601C1F2AEB00AD4239 /* Assets.xcassets in Resources */,
+				9208EC9A1E44B4C9002F72BE /* Info.plist in Resources */,
+				9208EC971E44B4C9002F72BE /* View.xib in Resources */,
+				9208EC991E44B4C9002F72BE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,10 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F25940581C1F2AEA00AD4239 /* ViewController.m in Sources */,
-				F259408F1C26320800AD4239 /* BarcodeParserImpl.m in Sources */,
-				F25940551C1F2AEA00AD4239 /* AppDelegate.m in Sources */,
-				F25940521C1F2AEA00AD4239 /* main.m in Sources */,
+				9208EC981E44B4C9002F72BE /* ViewController.m in Sources */,
+				9208EC941E44B4C9002F72BE /* AppDelegate.m in Sources */,
+				9208EC9B1E44B4C9002F72BE /* main.m in Sources */,
+				9208EC951E44B4C9002F72BE /* BarcodeParserImpl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,17 +344,6 @@
 			targetProxy = F25940751C1F2AEB00AD4239 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		F25940611C1F2AEB00AD4239 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F25940621C1F2AEB00AD4239 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F259407B1C1F2AEB00AD4239 /* Debug */ = {
@@ -442,7 +436,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "BarcodeReaderEAN-13/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/BarcodeReaderEAN-13/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tori.barcode-reader.barcode-reader-ean13";
@@ -455,7 +449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "BarcodeReaderEAN-13/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/BarcodeReaderEAN-13/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tori.barcode-reader.barcode-reader-ean13";
