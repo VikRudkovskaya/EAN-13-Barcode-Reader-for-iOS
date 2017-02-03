@@ -9,7 +9,7 @@
 #import "BRViewController.h"
 #import "BarcodeParserEAN13.h"
 
-@interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>;
+@interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>;
 
 @property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
 @property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
@@ -41,7 +41,7 @@
     NSData *dataImageFromGallery = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.6);
     UIImage *imageFromGallery = [[UIImage alloc] initWithData:dataImageFromGallery];
     self.loadedImageFromGallery.image = imageFromGallery;
-    
+    self.resultAlgorithmTextView.text = @"Tap analyze button";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -58,8 +58,13 @@
 - (IBAction)startButtonPressed:(id)sender {
     
     BarcodeParserEAN13 *barcodeParser = [[BarcodeParserEAN13 alloc] init];
-    NSString *str = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
-    self.resultAlgorithmTextView.text = str;
+    NSString *barcodeNumbers = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
+    self.resultAlgorithmTextView.text = barcodeNumbers;
+    
 }
 
+#pragma mark - UITextViewDelegate
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    [self.resultAlgorithmTextView resignFirstResponder];
+}
 @end

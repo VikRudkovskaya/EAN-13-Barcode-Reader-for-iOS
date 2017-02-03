@@ -22,7 +22,7 @@
 - (NSString *)barcodeFromImage:(UIImage *)image {
     
     if (!image) {
-        return @"Загрузите картинку";
+        return @"Need to download a barcode";
     }
     
 // Шаг 1. Подготовка
