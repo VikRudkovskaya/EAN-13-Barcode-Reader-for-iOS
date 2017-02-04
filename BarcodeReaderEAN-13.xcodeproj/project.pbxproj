@@ -194,9 +194,9 @@
 		9208EC891E44B4C9002F72BE /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9208EC8C1E44B4C9002F72BE /* BRViewController.xib */,
 				9208EC8D1E44B4C9002F72BE /* BRViewController.h */,
 				9208EC8E1E44B4C9002F72BE /* BRViewController.m */,
+				9208EC8C1E44B4C9002F72BE /* BRViewController.xib */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

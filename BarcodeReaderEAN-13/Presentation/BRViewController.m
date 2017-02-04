@@ -9,11 +9,11 @@
 #import "BRViewController.h"
 #import "BarcodeParserEAN13.h"
 
-@interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>;
+@interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>;
 
 @property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
 @property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
-@property (strong, nonatomic) IBOutlet UITextView *resultAlgorithmTextView;
+@property (strong, nonatomic) IBOutlet UITextField *resultAlgorithmTextField; // для того, чтобы можно было редактировать результат
 
 @end
 
@@ -33,7 +33,7 @@
     NSData *dataImageFromGallery = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.6);
     UIImage *imageFromGallery = [[UIImage alloc] initWithData:dataImageFromGallery];
     self.loadedImageFromGallery.image = imageFromGallery;
-    self.resultAlgorithmTextView.text = @"Tap analyze button";
+    self.resultAlgorithmTextField.text = @"Tap analyze button";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -51,12 +51,13 @@
     
     BarcodeParserEAN13 *barcodeParser = [[BarcodeParserEAN13 alloc] init];
     NSString *barcodeNumbers = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
-    self.resultAlgorithmTextView.text = barcodeNumbers;
+    self.resultAlgorithmTextField.text = barcodeNumbers;
     
 }
 
-#pragma mark - UITextViewDelegate
-- (void)textViewDidChangeSelection:(UITextView *)textView {
-    [self.resultAlgorithmTextView resignFirstResponder];
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 @end
