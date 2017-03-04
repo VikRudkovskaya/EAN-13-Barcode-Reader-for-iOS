@@ -30,7 +30,7 @@
     // Задаем исходное значение высоты, на которой пройдет сканирущая линия
     int h = round(height / 2 + 5); // Экспериментальным способом установлено, что + 5 лучше
     // Делаем массив 1-0 из фото
-    short **arrayFromImage = [self blackAndWhiteArrayCFromImage:image];
+    short **arrayFromImage = [self bitmapFromImage:image];
     // Выделяем из массива сканирующую линию
     short *vectorScanLine;
     vectorScanLine = arrayFromImage[h];
@@ -136,7 +136,7 @@
 }
 
 // Метод вычисляет количество нераспознанных цифр в штрихкоде
-- (short) calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:(short *)recognizedNumbers {
+- (short)calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:(short *)recognizedNumbers {
     short countOfUnrecognizedNumbersInBarcode = 0;
     for (int i = 1; i < 13; i++) {
         if (recognizedNumbers[i] < 0) {
@@ -146,7 +146,7 @@
     return countOfUnrecognizedNumbersInBarcode;
 }
 
-- (short *)recognitionAlgorithmWithScanLine:(short *) vectorScanLine width:(int) width {
+- (short *)recognitionAlgorithmWithScanLine:(short *)vectorScanLine width:(int) width {
 // Шаг 1. Подготовка
     // Шаг 1.1 Считаем индексы до начала и конца штрихкода - первых и последних двух вертикальных полос
     // (предпоагаю, что с левого и правого края белый фон, т.е. нули)
@@ -190,9 +190,9 @@
         // Шаг 2.1.1 Делаем сжатие куска сканирующей линии, чтобы получить последовательность семи нулей-единиц
         // (в этой последовательности закодирована одна цифра от 0 до 9)
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
-                                                      WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
-                                                                     WithStartIndex:&startIndexForBarcode
-                                                                                 WithWidth:(int)width];
+                                                                 averagePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
+                                                                                startIndex:&startIndexForBarcode
+                                                                                     width:(int)width];
         // Шаг 2.1.2 Проверяем стартовый индекс на "адекватность", неадекватный стартовый индекс может получиться,
         // если сканирующая линия некорректна
         if (startIndexForBarcode >= endIndexForBarcode) {
@@ -247,9 +247,9 @@
         }
         
         short *bitArrayForOneNumber = [self bitCompressionOfDashInVectorWithVectorScanLine:vectorScanLine
-                                                      WithAveragePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
-                                                                     WithStartIndex:&startIndexForBarcode
-                                                                                 WithWidth:(int) width];
+                                                                 averagePixelsInSimpleDash:averageCountOfPixelsInSimpleDash
+                                                                                startIndex:&startIndexForBarcode
+                                                                                     width:(int) width];
         if (startIndexForBarcode >= width) {
             for (short i = 7; i < 13; i++) {
                 vectorOfBarcodeNumbers[i] = -5;
@@ -265,10 +265,10 @@
     return vectorOfBarcodeNumbers;
 }
 
-- (short *) bitCompressionOfDashInVectorWithVectorScanLine:(short *) vectorScanLine
-                            WithAveragePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
-                                           WithStartIndex:(int *)startIndexForBarcodeOut
-                                                WithWidth:(int)width {
+- (short *)bitCompressionOfDashInVectorWithVectorScanLine:(short *)vectorScanLine
+                            averagePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
+                                           startIndex:(int *)startIndexForBarcodeOut
+                                                width:(int)width {
     // В идеальном случае число пикселей в каждой элементарной вертикальной черте можно точно вычислить (пиксельная длина
     // баркода будет кратна 95, соответсвенно на каждую элементарную черту придется одинаковое число пикселей).
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
@@ -308,7 +308,7 @@
 }
 
 #pragma mark - СonversionToBitmap
-- (short **) blackAndWhiteArrayCFromImage:(UIImage *)image { //делает из картинки "отчернобеленный" 0-1 массив
+- (short **)bitmapFromImage:(UIImage *)image { //делает из картинки "отчернобеленный" 0-1 массив
 // Шаг 1. Делаем из исходного UIImage битовую картинку
     //http://www.raywenderlich.com/69855/image-processing-in-ios-part-1-raw-bitmap-modification
     CGImageRef inputCGImage = [image CGImage];
@@ -380,7 +380,7 @@
     return arrayForImage;
 }
 
-- (short *) cutArray:(short *) bitArrayOfSixNumbers withIndex:(int)index {
+- (short *)cutArray:(short *)bitArrayOfSixNumbers withIndex:(int)index {
     short *resArray = calloc(7, sizeof(short));
    // short resArray[7];
     for(int i = 0; i < 7; i++){
