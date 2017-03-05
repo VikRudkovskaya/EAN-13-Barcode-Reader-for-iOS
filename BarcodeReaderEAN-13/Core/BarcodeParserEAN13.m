@@ -146,7 +146,7 @@
     return countOfUnrecognizedNumbersInBarcode;
 }
 
-- (short *)recognitionAlgorithmWithScanLine:(short *)vectorScanLine width:(int) width {
+- (short *)recognitionAlgorithmWithScanLine:(short *)vectorScanLine width:(int)width {
 // Шаг 1. Подготовка
     // Шаг 1.1 Считаем индексы до начала и конца штрихкода - первых и последних двух вертикальных полос
     // (предпоагаю, что с левого и правого края белый фон, т.е. нули)
@@ -504,7 +504,7 @@ res;})\
 
 #pragma mark - CalculationIndices
 
-- (int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode vectorScanLine:(short *) vectorScanLine width:(int) width {
+- (int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode vectorScanLine:(short *)vectorScanLine width:(int)width {
     // Дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черную
     // полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с
     // помощью череды циклов, но зато понятно
@@ -522,7 +522,7 @@ res;})\
 }
 
 - (int)calculateStartIndexToSignifificanNumbersInRightPartWithStartIndex:(int)startIndexForBarcode
-                                                          vectorScanLine:(short *) vectorScanLine
+                                                          vectorScanLine:(short *)vectorScanLine
                                                                    width:(int)width {
     int zeroOrOneMarker = 0;
     int middleDashes = 0;
@@ -549,7 +549,7 @@ res;})\
     return startIndexForBarcode;
 }
 
-- (int)calculateEndIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth:(NSUInteger) width {
+- (int)calculateEndIndexOfBarcodeFromVectorScanLine:(short *)vectorScanLine withWidth:(NSUInteger)width {
     int endIndexForBarcode = (int)width - 1;
     while (vectorScanLine[endIndexForBarcode] == 0 && endIndexForBarcode > 1) {
         endIndexForBarcode = endIndexForBarcode - 1;
