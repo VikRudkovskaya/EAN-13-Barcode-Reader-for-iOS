@@ -37,13 +37,15 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bsk-C4-eAz">
-                            <rect key="frame" x="218" y="5.5" width="60" height="53"/>
+                            <rect key="frame" x="218" y="21" width="60" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="S64-h1-VDa"/>
                             </constraints>
-                            <color key="tintColor" red="0.054999743830000003" green="0.28392991379999999" blue="0.39999753939999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <inset key="imageEdgeInsets" minX="23" minY="14" maxX="24" maxY="18"/>
+                            <color key="tintColor" red="0.088593500330000005" green="0.4199345001" blue="0.58421871820000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <state key="normal" image="share"/>
+                            <connections>
+                                <action selector="shareTouchUpInside:" destination="-1" eventType="touchUpInside" id="2pk-W7-ZOr"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="835-Yw-GZd">
                             <rect key="frame" x="0.0" y="27" width="42" height="10"/>
@@ -133,6 +135,6 @@
     </objects>
     <resources>
         <image name="camera" width="22" height="18"/>
-        <image name="share" width="33" height="53"/>
+        <image name="share" width="21" height="21"/>
     </resources>
 </document>

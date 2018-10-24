@@ -46,7 +46,8 @@
 }
 
 - (IBAction)shareTouchUpInside:(UIButton *)sender {
-    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.resultLabel.text] applicationActivities:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 #pragma mark - Support
