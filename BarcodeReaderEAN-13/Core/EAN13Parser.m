@@ -45,7 +45,7 @@
     }
     
     // Считаем контрольную сумму для полученных распознанных цифр. Если контрольная сумма корректна, то возвращаем true
-    //BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
+    // BOOL checkSum = [self checkControlSummOfRecognizedNumbers:recognizedNumbers];
     // Смотрим, есть ли нераспознанные цифры в штрихкоде, считаем сколько их.
     short countOfUnrecognizedNumbersInBarcode = [self calculateCountOfUnrecognizedNumbersInBarcodeWithVectorOfRecognizedNumbers:recognizedNumbers];
     short countOfUnrecognizedNumbersForBestRecognizedBarcode = countOfUnrecognizedNumbersInBarcode;
@@ -57,7 +57,7 @@
         int i = 0;
         int k = 0;
         // Проверяем, есть ли в строке элементы отличные от нуля. Если строка состоит только из нулей (или единиц в
-        //строке меньше 29), то нет смысла её проверять вообще
+        // строке меньше 29), то нет смысла её проверять вообще
         while (i < width) {
             if (vectorScanLine[i] > 0) {
                 k++;
@@ -86,18 +86,18 @@
     for (int i = 0; i < 13; i++) {
         if (i == 1 || i == 7) {
             if (bestRecognizedNumbers[i] < 0) {
-                [returnStringFromArray appendFormat:@"    %s", "*"];
+                [returnStringFromArray appendFormat:@"  %s", "*"];
             }
             else {
-                [returnStringFromArray appendFormat:@"    %d", bestRecognizedNumbers[i]];
+                [returnStringFromArray appendFormat:@"  %d", bestRecognizedNumbers[i]];
             }
         }
-        else{
+        else {
             if (bestRecognizedNumbers[i] < 0) {
-                [returnStringFromArray appendFormat:@" %s", "*"];
+                [returnStringFromArray appendFormat:@"%s", "*"];
             }
             else{
-                [returnStringFromArray appendFormat:@" %d", bestRecognizedNumbers[i]];
+                [returnStringFromArray appendFormat:@"%d", bestRecognizedNumbers[i]];
             }
         }
     }
@@ -465,7 +465,7 @@ res;})\
     if(compareWithPattern(bitArrayForOneNumber, ((short[7]){0, 0, 1, 0, 1, 1, 1}))) {
         return 9;
     }
-    return -2; //не совпало ни с одним шаблоном
+    return -2; // не совпало ни с одним шаблоном
 }
 
 - (short)decodeRightNumberWithBitArrayForOneNumber:(short *)bitArrayForOneNumber {
@@ -500,15 +500,14 @@ res;})\
     if (compareWithPattern(bitArrayForOneNumber, ((short[7]){1, 1, 1, 0, 1, 0, 0}))) {
         return 9;
     }
-    return -1; //-1 сигнализирует о том, что в R-кодировке число не распознано
+    return -1; // -1 сигнализирует о том, что в R-кодировке число не распознано
 }
 
 #pragma mark - CalculationIndices
 
 - (int)calculateStartIndexToSignificantNumbersWithStartIndex:(int)startIndexForBarcode vectorScanLine:(short *)vectorScanLine width:(int)width {
     // Дошли до первого темного места (первой длинной полоски, символизирующей начало штрихкода), пропускаем первую черную
-    // полоску, вторую белую, третью черную. Ищем значимые цифры. Вероятно, не самый правильный способ это сделать с
-    // помощью череды циклов, но зато понятно
+    // полоску, вторую белую, третью черную. Ищем значимые цифры.
     while (vectorScanLine[startIndexForBarcode] == 1 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }
@@ -516,6 +515,7 @@ res;})\
     while (vectorScanLine[startIndexForBarcode] == 0 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }
+    
     while (vectorScanLine[startIndexForBarcode] == 1 && startIndexForBarcode < width) {
         startIndexForBarcode++;
     }

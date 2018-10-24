@@ -9,11 +9,12 @@
 #import "AnalyzeImageViewController.h"
 #import "EAN13Parser.h"
 
-@interface AnalyzeImageViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>;
+@interface AnalyzeImageViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>;
 
-@property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
-@property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
-@property (strong, nonatomic) IBOutlet UITextField *resultAlgorithmTextField; // для того, чтобы можно было редактировать результат
+@property (weak, nonatomic) IBOutlet UIButton *attachPhotoButton;
+@property (weak, nonatomic) IBOutlet UIImageView *barcodeImageView;
+@property (weak, nonatomic) IBOutlet UIView *resultContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 
 @end
 
@@ -23,23 +24,20 @@
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *, id> *)info {
     
     NSData *dataImageFromGallery = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.6);
     UIImage *imageFromGallery = [[UIImage alloc] initWithData:dataImageFromGallery];
-    self.loadedImageFromGallery.image = imageFromGallery;
-    self.resultAlgorithmTextField.text = @"Tap analyze button";
+    self.barcodeImageView.image = imageFromGallery;
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self parseImage:imageFromGallery];
 }
 
 #pragma mark - IBActions
-- (IBAction)loadButtonFromGalleryTouchUpInside:(UIButton *)sender {
-    
+
+- (IBAction)newBarcodeImageTouchUpInside:(UIButton *)sender {
     UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
     pickerController.delegate = self;
     pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -47,16 +45,17 @@
     [self presentViewController:pickerController animated:YES completion:nil];
 }
 
-- (IBAction)analyzeTouchUpInside:(UIButton *)sender {
-    EAN13Parser *barcodeParser = [[EAN13Parser alloc] init];
-    NSString *barcodeNumbers = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
-    self.resultAlgorithmTextField.text = barcodeNumbers;
+- (IBAction)shareTouchUpInside:(UIButton *)sender {
+    
 }
 
-#pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
+#pragma mark - Support
+
+- (void)parseImage:(UIImage *)image {
+    EAN13Parser *barcodeParser = [[EAN13Parser alloc] init];
+    NSString *barcodeNumbers = [barcodeParser barcodeFromImage:image];
+    self.resultLabel.text = barcodeNumbers;
+    self.resultContainerView.hidden = NO;
 }
 
 @end
