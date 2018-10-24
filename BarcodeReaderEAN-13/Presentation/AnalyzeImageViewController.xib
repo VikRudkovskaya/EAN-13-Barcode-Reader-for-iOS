@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BRViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnalyzeImageViewController">
             <connections>
-                <outlet property="loadButtonFromGallery" destination="cuo-C4-UpU" id="VTI-Uu-Ndw"/>
+                <outlet property="loadButtonFromGallery" destination="cuo-C4-UpU" id="xq0-Eq-I6b"/>
                 <outlet property="loadedImageFromGallery" destination="QmV-kY-jVg" id="2KQ-lq-59N"/>
                 <outlet property="resultAlgorithmTextField" destination="lUF-La-2RN" id="9Oc-cb-zly"/>
                 <outlet property="view" destination="iN0-l3-epB" id="p2c-eA-gJi"/>
@@ -24,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8d3-zq-nCl">
-                    <rect key="frame" x="120.66666666666669" y="40" width="173" height="55"/>
+                    <rect key="frame" x="122" y="40" width="170" height="55"/>
                     <color key="backgroundColor" red="0.89869791669999999" green="0.89869791669999999" blue="0.89869791669999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="XkC-VO-sGS"/>
@@ -40,7 +39,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="startButtonPressed:" destination="-1" eventType="touchUpInside" id="Akx-r8-UoE"/>
+                        <action selector="analyzeTouchUpInside:" destination="-1" eventType="touchUpInside" id="hkk-Qb-dTo"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuo-C4-UpU">
@@ -59,7 +58,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="loadButtonFromGalleryPressedAction:" destination="-1" eventType="touchUpInside" id="w17-Pt-esz"/>
+                        <action selector="loadButtonFromGalleryTouchUpInside:" destination="-1" eventType="touchUpInside" id="yAl-yH-9iP"/>
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QmV-kY-jVg">
@@ -116,7 +115,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="loadButtonFromGalleryPressedAction:" destination="-1" eventType="touchUpInside" id="GGD-JK-9oI"/>
+                        <action selector="loadButtonFromGalleryTouchUpInside:" destination="-1" eventType="touchUpInside" id="O41-n5-LiA"/>
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H8W-HD-ECS">
@@ -126,7 +125,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOm-0d-0VC">
-                    <rect key="frame" x="121" y="661" width="173" height="55"/>
+                    <rect key="frame" x="122" y="661" width="170" height="55"/>
                     <color key="backgroundColor" red="0.89869791669999999" green="0.89869791669999999" blue="0.89869791669999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="XIz-FM-oOq"/>
@@ -142,7 +141,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="startButtonPressed:" destination="-1" eventType="touchUpInside" id="bhd-2r-1T2"/>
+                        <action selector="analyzeTouchUpInside:" destination="-1" eventType="touchUpInside" id="sBn-HY-qsg"/>
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Downoad barcode and tap analyze" textAlignment="center" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="g0c-pL-ZmP">

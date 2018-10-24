@@ -1,15 +1,15 @@
 //
-//  ViewController.m
+//  AnalyzeImageViewController.m
 //  BarcodeReaderEAN-13
 //
 //  Created by Viktoria Rudkovskaya on 14.12.15.
 //  Copyright © 2015 Viktoria Rudkovskaya. All rights reserved.
 //
 
-#import "BRViewController.h"
-#import "BarcodeParserEAN13.h"
+#import "AnalyzeImageViewController.h"
+#import "EAN13Parser.h"
 
-@interface BRViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>;
+@interface AnalyzeImageViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>;
 
 @property (strong, nonatomic) IBOutlet UIImageView *loadedImageFromGallery;
 @property (strong, nonatomic) IBOutlet UIButton *loadButtonFromGallery;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation BRViewController
+@implementation AnalyzeImageViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,7 +38,7 @@
 }
 
 #pragma mark - IBActions
-- (IBAction)loadButtonFromGalleryPressedAction:(id)sender {
+- (IBAction)loadButtonFromGalleryTouchUpInside:(UIButton *)sender {
     
     UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
     pickerController.delegate = self;
@@ -47,12 +47,10 @@
     [self presentViewController:pickerController animated:YES completion:nil];
 }
 
-- (IBAction)startButtonPressed:(id)sender {
-    
-    BarcodeParserEAN13 *barcodeParser = [[BarcodeParserEAN13 alloc] init];
+- (IBAction)analyzeTouchUpInside:(UIButton *)sender {
+    EAN13Parser *barcodeParser = [[EAN13Parser alloc] init];
     NSString *barcodeNumbers = [barcodeParser barcodeFromImage:self.loadedImageFromGallery.image];
     self.resultAlgorithmTextField.text = barcodeNumbers;
-    
 }
 
 #pragma mark - UITextFieldDelegate
@@ -60,4 +58,5 @@
     [textField resignFirstResponder];
     return YES;
 }
+
 @end

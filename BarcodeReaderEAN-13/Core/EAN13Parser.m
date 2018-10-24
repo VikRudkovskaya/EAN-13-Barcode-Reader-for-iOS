@@ -1,21 +1,22 @@
 //
-//  BarcodeParserEAN13.m
+//  EAN13Parser.m
 //  BarcodeReaderEAN-13
 //
 //  Created by Viktoria Rudkovskaya on 20.12.15.
 //  Copyright © 2015 Viktoria Rudkovskaya. All rights reserved.
 //
 
-#import "BarcodeParserEAN13.h"
+#import "EAN13Parser.h"
+#import <UIKit/UIKit.h>
 
-/*
-* -4, -5, - некорректное отчернобеливание изображения или в сканирующую линию попал не баркод
-* -3 - сканирущая линия прошла ниже или выше штрихкода
-* -1 - не прошел по L-шаблону, может быть ошибка парсера
-* -2 - не совпало ни с одним шаблоном – ошибка парсера
-*/
+/**
+ * -4, -5, - некорректное отчернобеливание изображения или в сканирующую линию попал не баркод
+ * -3 - сканирущая линия прошла ниже или выше штрихкода
+ * -1 - не прошел по L-шаблону, может быть ошибка парсера
+ * -2 - не совпало ни с одним шаблоном – ошибка парсера
+ */
 
-@implementation BarcodeParserEAN13
+@implementation EAN13Parser
 
 - (NSString *)barcodeFromImage:(UIImage *)image {
     

@@ -1,5 +1,5 @@
 //
-//  BRViewController.h
+//  AnalyzeImageViewController.h
 //  BarcodeReaderEAN-13
 //
 //  Created by Viktoria Rudkovskaya on 14.12.15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BRViewController : UIViewController
+@interface AnalyzeImageViewController : UIViewController
 
 @end

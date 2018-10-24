@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "BRViewController.h"
+#import "AnalyzeImageViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,9 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.mainWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    BRViewController *viewController = [[BRViewController alloc] initWithNibName:@"BRViewController" bundle:nil]; //[NSBundle mainBundle]];
-
-    //[self.mainWindow addSubview:viewController.view];
+    AnalyzeImageViewController *viewController = [[AnalyzeImageViewController alloc] initWithNibName:NSStringFromClass([AnalyzeImageViewController class]) bundle:nil];
     self.mainWindow.rootViewController = viewController;
     [self.mainWindow makeKeyAndVisible];
 
