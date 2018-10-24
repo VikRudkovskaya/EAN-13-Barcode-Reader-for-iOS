@@ -53,8 +53,6 @@
 		9208ED4C1E4524AE002F72BE /* real-example-8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9208ED251E4524AE002F72BE /* real-example-8.jpg */; };
 		9208ED4D1E4524AE002F72BE /* real-example-9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9208ED261E4524AE002F72BE /* real-example-9.jpg */; };
 		9208ED581E452510002F72BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9208ED561E452510002F72BE /* LaunchScreen.storyboard */; };
-		F259406E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */; };
-		F25940791C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,11 +126,7 @@
 		9208ED571E452510002F72BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F259404D1C1F2AEA00AD4239 /* BarcodeReaderEAN-13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeReaderEAN-13.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F25940691C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeReaderEAN-13Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderEAN_13Tests.m; sourceTree = "<group>"; };
-		F259406F1C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F25940741C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeReaderEAN-13UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderEAN_13UITests.m; sourceTree = "<group>"; };
-		F259407A1C1F2AEB00AD4239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,8 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				9208EC811E44B4C9002F72BE /* BarcodeReaderEAN-13 */,
-				F259406C1C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests */,
-				F25940771C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests */,
 				F259404E1C1F2AEA00AD4239 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -300,24 +292,6 @@
 				F25940741C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F259406C1C1F2AEB00AD4239 /* BarcodeReaderEAN-13Tests */ = {
-			isa = PBXGroup;
-			children = (
-				F259406D1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m */,
-				F259406F1C1F2AEB00AD4239 /* Info.plist */,
-			);
-			path = "BarcodeReaderEAN-13Tests";
-			sourceTree = "<group>";
-		};
-		F25940771C1F2AEB00AD4239 /* BarcodeReaderEAN-13UITests */ = {
-			isa = PBXGroup;
-			children = (
-				F25940781C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m */,
-				F259407A1C1F2AEB00AD4239 /* Info.plist */,
-			);
-			path = "BarcodeReaderEAN-13UITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,7 +474,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F259406E1C1F2AEB00AD4239 /* BarcodeReaderEAN_13Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +481,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F25940791C1F2AEB00AD4239 /* BarcodeReaderEAN_13UITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
