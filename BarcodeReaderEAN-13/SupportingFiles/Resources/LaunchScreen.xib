@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Ohy-SQ-2Uf">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EAN-13 Reader" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIM-45-c3G">
+                    <rect key="frame" x="74" y="316.5" width="227" height="34"/>
+                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="29"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Ohy-SQ-2Uf" secondAttribute="trailing" id="4Jp-cb-Alh"/>
+                <constraint firstItem="Ohy-SQ-2Uf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="LHD-qd-fWE"/>
+                <constraint firstItem="Ohy-SQ-2Uf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XM5-Be-hNy"/>
+                <constraint firstItem="vIM-45-c3G" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="kLW-uL-dX1"/>
+                <constraint firstAttribute="bottom" secondItem="Ohy-SQ-2Uf" secondAttribute="bottom" id="m8Q-1u-jyD"/>
+                <constraint firstItem="vIM-45-c3G" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wkB-xu-iWo"/>
+            </constraints>
+            <point key="canvasLocation" x="28" y="144"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="background" width="375" height="667"/>
+    </resources>
+</document>

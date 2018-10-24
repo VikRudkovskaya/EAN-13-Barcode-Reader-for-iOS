@@ -50,9 +50,9 @@
 		F24525312180939A00FF9DDA /* example-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F24525022180939A00FF9DDA /* example-7.png */; };
 		F24525322180939A00FF9DDA /* example-1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = F24525032180939A00FF9DDA /* example-1.JPG */; };
 		F24525332180939A00FF9DDA /* example-2.JPG in Resources */ = {isa = PBXBuildFile; fileRef = F24525042180939A00FF9DDA /* example-2.JPG */; };
-		F24525342180939A00FF9DDA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F24525052180939A00FF9DDA /* LaunchScreen.storyboard */; };
 		F24525352180939A00FF9DDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F24525072180939A00FF9DDA /* main.m */; };
 		F24525362180939A00FF9DDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F245250A2180939A00FF9DDA /* AppDelegate.m */; };
+		F24525392180B76200FF9DDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F24525382180B76200FF9DDA /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,11 +101,11 @@
 		F24525022180939A00FF9DDA /* example-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "example-7.png"; sourceTree = "<group>"; };
 		F24525032180939A00FF9DDA /* example-1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "example-1.JPG"; sourceTree = "<group>"; };
 		F24525042180939A00FF9DDA /* example-2.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "example-2.JPG"; sourceTree = "<group>"; };
-		F24525062180939A00FF9DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F24525072180939A00FF9DDA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F24525092180939A00FF9DDA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F245250A2180939A00FF9DDA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F245250B2180939A00FF9DDA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F24525382180B76200FF9DDA /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		F259404D1C1F2AEA00AD4239 /* BarcodeReaderEAN-13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeReaderEAN-13.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -163,7 +163,7 @@
 		F24524D92180939A00FF9DDA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F24525052180939A00FF9DDA /* LaunchScreen.storyboard */,
+				F24525382180B76200FF9DDA /* LaunchScreen.xib */,
 				F24524DA2180939A00FF9DDA /* Assets.xcassets */,
 				F24524DB2180939A00FF9DDA /* Examples */,
 			);
@@ -324,6 +324,7 @@
 				F245250D2180939A00FF9DDA /* real-example-10(1).jpg in Resources */,
 				F245252D2180939A00FF9DDA /* example-3.bmp in Resources */,
 				F24525192180939A00FF9DDA /* real-example-2.jpg in Resources */,
+				F24525392180B76200FF9DDA /* LaunchScreen.xib in Resources */,
 				F24525262180939A00FF9DDA /* real-example-8.jpg in Resources */,
 				F24525282180939A00FF9DDA /* real-example-18.jpg in Resources */,
 				F24525142180939A00FF9DDA /* real-example-14.jpg in Resources */,
@@ -353,7 +354,6 @@
 				F245252A2180939A00FF9DDA /* example-10-gray.jpg in Resources */,
 				F245251D2180939A00FF9DDA /* real-example-7(1).jpg in Resources */,
 				F24525302180939A00FF9DDA /* example-4.bmp in Resources */,
-				F24525342180939A00FF9DDA /* LaunchScreen.storyboard in Resources */,
 				F245251A2180939A00FF9DDA /* real-example-3.jpg in Resources */,
 				F24525152180939A00FF9DDA /* real-example-10.jpg in Resources */,
 			);
@@ -374,17 +374,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		F24525052180939A00FF9DDA /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F24525062180939A00FF9DDA /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F259407B1C1F2AEB00AD4239 /* Debug */ = {

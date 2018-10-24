@@ -172,5 +172,39 @@
             </constraints>
             <point key="canvasLocation" x="1417" y="397"/>
         </view>
+        <view contentMode="scaleToFill" id="edA-AA-Fbx">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lG5-5c-Ybj">
+                    <rect key="frame" x="96" y="576" width="222" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94146696891191706" green="0.94146696891191706" blue="0.94146696891191706" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
+                    <state key="normal" title="Analyze image">
+                        <color key="titleColor" red="0.088593500328516803" green="0.41993450009626548" blue="0.5842187182378239" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-4f-hkY">
+                    <rect key="frame" x="223" y="20" width="171" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94146696890000003" green="0.94146696890000003" blue="0.94146696890000003" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="17"/>
+                    <state key="normal" title="New photo">
+                        <color key="titleColor" red="0.088593500330000005" green="0.4199345001" blue="0.58421871820000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MFM-gc-UAf">
+                    <rect key="frame" x="0.0" y="102" width="414" height="442"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="MFM-gc-UAf" secondAttribute="trailing" id="ZQ9-Oh-aBs"/>
+                <constraint firstItem="MFM-gc-UAf" firstAttribute="top" secondItem="edA-AA-Fbx" secondAttribute="top" id="mj9-4I-rf5"/>
+                <constraint firstItem="MFM-gc-UAf" firstAttribute="leading" secondItem="edA-AA-Fbx" secondAttribute="leading" id="uXn-zx-cF2"/>
+            </constraints>
+            <point key="canvasLocation" x="2131.8840579710145" y="396.19565217391306"/>
+        </view>
     </objects>
 </document>
