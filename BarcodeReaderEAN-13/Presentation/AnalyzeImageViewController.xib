@@ -25,7 +25,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MFM-gc-UAf">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
-                    <color key="backgroundColor" red="0.94146696890000003" green="0.94146696890000003" blue="0.94146696890000003" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="0.1349911971830986" colorSpace="custom" customColorSpace="displayP3"/>
                 </imageView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oHD-OM-f9f">
                     <rect key="frame" x="0.0" y="242" width="320" height="64"/>
@@ -60,7 +60,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.94146696890000003" green="0.94146696890000003" blue="0.94146696890000003" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="0.20293243838028169" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstItem="YQZ-Sd-jRl" firstAttribute="centerY" secondItem="oHD-OM-f9f" secondAttribute="centerY" id="1hM-OF-jfB"/>
                         <constraint firstItem="yH4-vo-Hye" firstAttribute="leading" secondItem="835-Yw-GZd" secondAttribute="trailing" id="8j8-NB-dZ1"/>
@@ -79,7 +79,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-4f-hkY">
                     <rect key="frame" x="60" y="369" width="200" height="48"/>
-                    <color key="backgroundColor" red="0.94146696890000003" green="0.94146696890000003" blue="0.94146696890000003" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="0.19870488556338028" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="0Vs-iJ-Ce6"/>
                         <constraint firstAttribute="height" constant="48" id="eWb-ER-cfB"/>
