@@ -27,12 +27,11 @@
 // Шаг 1. Подготовка
     NSUInteger height = image.size.height;
     NSUInteger width = image.size.width;
-    NSMutableString *returnStringFromArray = [[NSMutableString alloc] init];
     // Задаем исходное значение высоты, на которой пройдет сканирущая линия
     int h = round(height / 2 + 5); // Экспериментальным способом установлено, что + 5 лучше
     // Делаем массив 1-0 из фото
     short **arrayFromImage = [self bitmapFromImage:image];
-    // Выделяем из массива сканирующую линию
+    // Выделяем из массива сканирующую линию, т.е. из битового массива "вырезаем" один вектор, который и будем анализировать
     short *vectorScanLine;
     vectorScanLine = arrayFromImage[h];
 
@@ -83,21 +82,22 @@
     }
     
 // Шаг 3. Преобразование в строку
+    NSMutableString *resultStringFromArray = [[NSMutableString alloc] init];
     for (int i = 0; i < 13; i++) {
         if (i == 1 || i == 7) {
             if (bestRecognizedNumbers[i] < 0) {
-                [returnStringFromArray appendFormat:@"  %s", "*"];
+                [resultStringFromArray appendFormat:@"  %s", "*"];
             }
             else {
-                [returnStringFromArray appendFormat:@"  %d", bestRecognizedNumbers[i]];
+                [resultStringFromArray appendFormat:@"  %d", bestRecognizedNumbers[i]];
             }
         }
         else {
             if (bestRecognizedNumbers[i] < 0) {
-                [returnStringFromArray appendFormat:@"%s", "*"];
+                [resultStringFromArray appendFormat:@"%s", "*"];
             }
             else{
-                [returnStringFromArray appendFormat:@"%d", bestRecognizedNumbers[i]];
+                [resultStringFromArray appendFormat:@"%d", bestRecognizedNumbers[i]];
             }
         }
     }
@@ -109,12 +109,13 @@
     free(arrayFromImage);
     free(recognizedNumbers);
     // NSLog(@"TEST %@", @(_allocCount));
-    return returnStringFromArray;
+    return resultStringFromArray;
 }
 
 // Метод считает контрольную сумму полученных распознанных цифр. Если сумма корректна, то возвращается true
 
-/* Суммируются все цифры на чётных позициях (вторая, четвёртая, шестая, и т. д.) и результат умножается на три.
+/**
+ * Суммируются все цифры на чётных позициях (вторая, четвёртая, шестая, и т. д.) и результат умножается на три.
  * Суммируются все цифры на нечётных позициях (первая, третья, пятая, и т. д.)
  * Обе суммы складываются, и от полученного результата оставляется только последняя цифра
  * Эту цифру вычитают из 10
@@ -267,9 +268,9 @@
 }
 
 - (short *)bitCompressionOfDashInVectorWithVectorScanLine:(short *)vectorScanLine
-                            averagePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
-                                           startIndex:(int *)startIndexForBarcodeOut
-                                                width:(int)width {
+                                averagePixelsInSimpleDash:(float)averageCountOfPixelsInSimpleDash
+                                               startIndex:(int *)startIndexForBarcodeOut
+                                                    width:(int)width {
     // В идеальном случае число пикселей в каждой элементарной вертикальной черте можно точно вычислить (пиксельная длина
     // баркода будет кратна 95, соответсвенно на каждую элементарную черту придется одинаковое число пикселей).
     // Но изображения не идеальны - на каждую элементарную черту может приходиться разное количество пикселей.
@@ -557,14 +558,5 @@ res;})\
     }
     return endIndexForBarcode;
 }
-
-//void callocCheck() {
-//    NSLog(@"ttt");
-//}
-//
-//static NSInteger _allocCount = 0;
-//
-//#define _free(arg) ({_allocCount--; NSLog(@"free %@", @(_allocCount));  free(arg); })
-//#define _calloc(arg1, arg2) ({_allocCount++; NSLog(@"calloc %@ %@ (%@)", @(arg1), @(arg2), @(_allocCount)); callocCheck();  calloc(arg1, arg2); })
 
 @end
