@@ -13,14 +13,14 @@ Note that the algorithm analyzes the bitmap from left to right. Therefore, it on
 
 [Обратите внимание, что алгоритм в текущем своем исполнении анализирует битовое изображение слева направо. Он работает только с фотографиями определенного вида. Левая сторона изображения обязана начинаться с белой области, то есть визуальный мусор должен быть предварительно обрезан. В противном случае, алгоритм не будет работать корректно.]
 
-![Корректное и некорректное распознавание](https://github.com/VikRudkovskaya/iOSBarcodeReaderEAN13/raw/master/Screenshots/images-constraints.jpg)
+![Корректное и некорректное распознавание](https://github.com/VikRudkovskaya/iOSBarcodeReaderEAN13/raw/master/Screenshots/images-constraint.png)
 
 Images suitable for the algorithm are given in the Resources -> Examples -> Real-Photos folder.
 [Подходящие под алгоритм изображения приведены в папке Resources -> Examples -> Real-Photos.]
 
 ## Additional [Дополнительно]
 
-Логика распознавания находится в Core -> EAN13Parser. Работоспособность алгоритма можно протестировать на изображениях, находящихся в папке Resources -> Examples
+Логика распознавания находится в Core -> EAN13Parser.
 
 Для понимания специфики работы Core необходимо ознакомиться с теорией: [как устроены штрих-коды EAN-13](http://www.rion.ru/information/articles/general-barcode/)
 
