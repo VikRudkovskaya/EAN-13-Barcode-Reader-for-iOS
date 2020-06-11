@@ -4,7 +4,7 @@
 
 Небольшое ios-приложение, демонстрирующее возможности алгоритма распознавания штриховых кодов в формате EAN-13 с реальных фотографий. После загрузки фотографии штрихкода из галереи,  алгоритм автоматически запустится, а результат отобразится под фото. Алгоритм построен на анализе битовой карты, полученной из предоставленного изображения.
 
-![Иллюстрация к проекту](https://github.com/VikRudkovskaya/iOSBarcodeReaderEAN13/raw/master/Screenshots/barcode-ex-img.png)
+![Иллюстрация к проекту](https://github.com/VikRudkovskaya/iOSBarcodeReaderEAN13/raw/master/Screenshots/EAN13-Screens.png)
 
 
 ##  Constrains [Ограничения]
